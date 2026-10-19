@@ -44,11 +44,11 @@ const navItems = [
   { label: "Kalender Liturgi", href: "#kalender" },
 ];
 
-type Person = { name: string; birthDate: string; region: string };
+type Person = { name: string; region: string };
 type Group = { title: string; people: Person[] };
 
 const chair: Person = {
-  name: "Eugene Sri Mulyani", birthDate: "17 November 1973", region: "Ancol",
+  name: "Eugene Sri Mulyani", region: "Ancol",
 };
 
 const divisions: {
@@ -61,76 +61,76 @@ const divisions: {
 }[] = [
   {
     number: "01", title: "Pendampingan Parsius, Santaris, dan Caeremoniarius", shortTitle: "Parsius, Santaris & Caeremoniarius", accent: "violet",
-    deputy: { name: "Dionisius Matthew Reinhart Budiman", birthDate: "5 Oktober 2006", region: "Keagungan" },
+    deputy: { name: "Dionisius Matthew Reinhart Budiman", region: "Keagungan" },
     groups: [
-      { title: "Ketua Subseksi Putra Altar St. Tarsisius", people: [{ name: "Benedictus Yongen Given Rombe", birthDate: "21 Juli 2012", region: "Dwiwarna" }] },
-      { title: "Ketua Subseksi Putri Sakristi St. Jeanne d’Arc", people: [{ name: "Felice Perpetua Xelica Electra Verrenna", birthDate: "30 Desember 2011", region: "Kartini" }] },
-      { title: "Ketua Subseksi Caeremoniarius St. Yohanes Berchmans", people: [{ name: "Alexius Rayhan Adilla Trixie", birthDate: "12 Desember 2008", region: "Kartini" }] },
+      { title: "Ketua Subseksi Putra Altar St. Tarsisius", people: [{ name: "Benedictus Yongen Given Rombe", region: "Dwiwarna" }] },
+      { title: "Ketua Subseksi Putri Sakristi St. Jeanne d’Arc", people: [{ name: "Felice Perpetua Xelica Electra Verrenna", region: "Kartini" }] },
+      { title: "Ketua Subseksi Caeremoniarius St. Yohanes Berchmans", people: [{ name: "Alexius Rayhan Adilla Trixie", region: "Kartini" }] },
     ],
   },
   {
     number: "02", title: "Pendampingan Lektor, Pemazmur, dan Pasdior", shortTitle: "Lektor, Pemazmur & Pasdior", accent: "blue",
-    deputy: { name: "Maria Stephanie Indri Putri", birthDate: "2 Juli 1989", region: "Taman Sari" },
+    deputy: { name: "Maria Stephanie Indri Putri", region: "Taman Sari" },
     groups: [
-      { title: "Ketua Subseksi Lektor St. Hieronimus", people: [{ name: "Johanes Denny Indrawan", birthDate: "14 Desember 1981", region: "Kebon Jeruk" }] },
-      { title: "Ketua Subseksi Pemazmur St. Cicilia", people: [{ name: "Alfonsus Yosef Gabriel Syamsudin", birthDate: "10 Agustus 2007", region: "Kartini" }] },
-      { title: "Ketua Subseksi Pasdior St. Romanus", people: [{ name: "Natalia Netty Coa", birthDate: "11 Juli 1975", region: "Pang. Jayakarta" }] },
+      { title: "Ketua Subseksi Lektor St. Hieronimus", people: [{ name: "Johanes Denny Indrawan", region: "Kebon Jeruk" }] },
+      { title: "Ketua Subseksi Pemazmur St. Cicilia", people: [{ name: "Alfonsus Yosef Gabriel Syamsudin", region: "Kartini" }] },
+      { title: "Ketua Subseksi Pasdior St. Romanus", people: [{ name: "Natalia Netty Coa", region: "Pang. Jayakarta" }] },
     ],
   },
   {
     number: "03", title: "Pendampingan Prodiakon, Kolatan, dan Dekorasi Altar", shortTitle: "Prodiakon, Kolatan & Dekorasi Altar", accent: "coral",
-    deputy: { name: "Caecilia Tjen Lydia", birthDate: "12 Desember 1972", region: "Mangga Besar 1" },
+    deputy: { name: "Caecilia Tjen Lydia", region: "Mangga Besar 1" },
     groups: [
-      { title: "Ketua Subseksi Kolatan St. Zita", people: [{ name: "Clarissa Stephanie Tediana", birthDate: "4 September 1984", region: "Taman Sari" }] },
-      { title: "Ketua Subseksi Prodiakon St. Petrus dan Paulus", people: [{ name: "Vinsensius Dominikus Budiono", birthDate: "24 Januari 1973", region: "Kartini" }] },
+      { title: "Ketua Subseksi Kolatan St. Zita", people: [{ name: "Clarissa Stephanie Tediana", region: "Taman Sari" }] },
+      { title: "Ketua Subseksi Prodiakon St. Petrus dan Paulus", people: [{ name: "Vinsensius Dominikus Budiono", region: "Kartini" }] },
       { title: "Ketua Subseksi Dekorasi Altar", people: [] },
     ],
   },
   {
     number: "04", title: "Tata Laksana, Perayaan, dan Ibadat", shortTitle: "Tata Laksana, Perayaan & Ibadat", accent: "violet",
-    deputy: { name: "Anthony Edward Tanjaya Jason Winata", birthDate: "2 April 2004", region: "Kartini" },
+    deputy: { name: "Anthony Edward Tanjaya Jason Winata", region: "Kartini" },
     groups: [
-      { title: "Staff Musica Liturgia", people: [{ name: "Alfonsus Yosef Gabriel Syamsudin", birthDate: "10 Agustus 2007", region: "Kartini" }] },
+      { title: "Staff Musica Liturgia", people: [{ name: "Alfonsus Yosef Gabriel Syamsudin", region: "Kartini" }] },
       { title: "Staff Tata Gerak Liturgi", people: [
-        { name: "Vinsensius Calvine Jonathan", birthDate: "8 Oktober 1999", region: "Kebon Jeruk" },
-        { name: "Bonifasius Maxien Mario", birthDate: "15 Mei 2002", region: "Non-Paroki" },
+        { name: "Vinsensius Calvine Jonathan", region: "Kebon Jeruk" },
+        { name: "Bonifasius Maxien Mario", region: "Non-Paroki" },
       ] },
       { title: "Staff Misa dan Ibadat Khusus", people: [
-        { name: "Bridgia Livia Marcella", birthDate: "10 April 2008", region: "Kartini" },
-        { name: "Lim Valencia Salvina Philicia Teana", birthDate: "23 Mei 2006", region: "Pang. Jayakarta" },
+        { name: "Bridgia Livia Marcella", region: "Kartini" },
+        { name: "Lim Valencia Salvina Philicia Teana", region: "Pang. Jayakarta" },
       ] },
     ],
   },
   {
     number: "05", title: "Administrasi dan Komunikasi", shortTitle: "Administrasi & Komunikasi", accent: "blue",
-    deputy: { name: "Florentina Aurelia Regina Sabina", birthDate: "18 Juni 2003", region: "Keagungan" },
+    deputy: { name: "Florentina Aurelia Regina Sabina", region: "Keagungan" },
     groups: [
       { title: "Staff Notulensi dan Desain Visual", people: [
-        { name: "Timotius Vincent Halim", birthDate: "22 Mei 2004", region: "Kartini" },
+        { name: "Timotius Vincent Halim", region: "Kartini" },
       ] },
       { title: "Staff SAPA", people: [
-        { name: "Fransiskus De Sales Kenneth Hendra", birthDate: "16 Oktober 2006", region: "Mangga Besar 1" },
-        { name: "Evangeline Jessica Evelyn Muksin", birthDate: "5 September 2008", region: "Kartini" },
+        { name: "Fransiskus De Sales Kenneth Hendra", region: "Mangga Besar 1" },
+        { name: "Evangeline Jessica Evelyn Muksin", region: "Kartini" },
       ] },
       { title: "Staff Proposal LPJ", people: [
-        { name: "Ignatius Kelvin Leonardo", birthDate: "12 Januari 1997", region: "Dwiwarna" },
-        { name: "Simon Zendy", birthDate: "28 Oktober 1986", region: "Keagungan" },
+        { name: "Ignatius Kelvin Leonardo", region: "Dwiwarna" },
+        { name: "Simon Zendy", region: "Keagungan" },
       ] },
       { title: "Staff Komunikasi SLL", people: [
-        { name: "Emerentiana Yanti Liani", birthDate: "1 November 1967", region: "Kartini" },
+        { name: "Emerentiana Yanti Liani", region: "Kartini" },
       ] },
     ],
   },
   {
     number: "06", title: "Barang Liturgi dan Benda Devosi", shortTitle: "Barang Liturgi & Benda Devosi", accent: "coral",
-    deputy: { name: "Dorothea Dermawaty Purba", birthDate: "17 Maret 1963", region: "Tangki" },
+    deputy: { name: "Dorothea Dermawaty Purba", region: "Tangki" },
     groups: [
       { title: "Staff Inventaris", people: [
-        { name: "Giovana Susanna", birthDate: "7 November 1978", region: "Dwiwarna" },
-        { name: "Christian Nathanael Winoto", birthDate: "22 November 2008", region: "Mangga Dua-Kota" },
+        { name: "Giovana Susanna", region: "Dwiwarna" },
+        { name: "Christian Nathanael Winoto", region: "Mangga Dua-Kota" },
       ] },
       { title: "Staff Pengadaan Barang", people: [
-        { name: "Gabriela Jocelyn Nathaniel", birthDate: "18 Maret 2007", region: "Mangga Dua-Kota" },
+        { name: "Gabriela Jocelyn Nathaniel", region: "Mangga Dua-Kota" },
       ] },
     ],
   },
@@ -139,8 +139,6 @@ const divisions: {
 function PersonDetails({ person }: { person: Person }) {
   return (
     <p className="person-details">
-      <span>{person.birthDate}</span>
-      <span aria-hidden="true">·</span>
       <span>Wilayah {person.region}</span>
     </p>
   );
