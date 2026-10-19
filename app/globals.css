@@ -124,6 +124,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   transition: transform .2s ease, background-color .2s ease, border-color .2s ease;
 }
 .button:hover { transform: translateY(-2px); }
+.button:active { transform: translateY(1px) scale(.98); }
 .button-light { background: #fff; color: #23275a; }
 .button-light:hover { background: #f5edda; }
 .button-primary {
@@ -193,7 +194,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   height: 100%;
   object-fit: cover;
   object-position: 68% center;
+  transition: transform 1.2s ease;
 }
+.verse-wrap:hover .hero-art-image { transform: scale(1.045); }
 .verse-wrap::after {
   position: absolute;
   inset: 0;
@@ -263,7 +266,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   padding: 1.75rem 2rem;
   color: #1c2146;
   box-shadow: 0 16px 42px rgb(30 38 105 / .07);
+  transition: box-shadow .3s ease, border-color .3s ease;
 }
+.leader-card:hover { border-color: #c3a66f; box-shadow: 0 22px 55px rgb(30 38 105 / .12); }
 .leader-icon {
   display: grid;
   width: 53px;
@@ -286,11 +291,13 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
 .org-rail { width: 83%; height: 28px; border: 1px solid #cdbb97; border-bottom: 0; border-radius: 14px 14px 0 0; }
 .division-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: .85rem; }
 .division-summary {
+  position: relative;
   display: flex;
   min-height: 204px;
   flex-direction: column;
   align-items: flex-start;
   min-width: 0;
+  overflow: hidden;
   border: 1px solid #e5dfdf;
   border-top: 4px solid var(--accent-color);
   border-radius: 20px;
@@ -301,7 +308,12 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   text-align: left;
   transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
 }
+.division-summary::after { position: absolute; top: -20%; left: -90%; width: 50%; height: 140%; background: linear-gradient(90deg, transparent, rgb(255 255 255 / .45), transparent); content: ""; pointer-events: none; transform: skewX(-20deg); transition: left .65s ease; }
 .division-summary:hover { transform: translateY(-5px); background: var(--accent-bg); box-shadow: 0 18px 40px rgb(30 38 105 / .12); }
+.division-summary:hover::after { left: 145%; }
+.division-summary:active { transform: translateY(-1px) scale(.97); }
+.division-summary-action svg { transition: transform .25s ease; }
+.division-summary:hover .division-summary-action svg { transform: translate(3px, -3px); }
 .division-summary:focus-visible, .division-dialog-close:focus-visible { outline: 3px solid #8c6a30; outline-offset: 3px; }
 .division-summary-number { color: var(--accent-color); font-size: .67rem; font-weight: 850; letter-spacing: .14em; }
 .division-summary-title { margin-top: 1.1rem; font-family: var(--font-cormorant), Georgia, serif; font-size: 1.5rem; font-weight: 700; line-height: 1.05; overflow-wrap: anywhere; }
@@ -345,6 +357,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
 .service-grid-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .service-grid-four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .service-card {
+  position: relative;
   display: flex;
   min-width: 0;
   flex-direction: column;
@@ -353,10 +366,18 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   background: #fff;
   padding: 1.6rem;
   color: #20244e;
+  box-shadow: 0 10px 24px rgb(5 8 35 / .06);
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
 }
-.service-card-linked { min-height: 290px; transition: transform .2s ease, box-shadow .2s ease; }
+.service-card::before { position: absolute; inset: 0 auto auto 0; width: 0; height: 4px; border-radius: 25px 0 0; background: var(--accent-color); content: ""; transition: width .45s ease; }
+.service-card:hover::before { width: 100%; }
+.service-card:not(.service-card-linked):hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgb(5 8 35 / .18); }
+.service-card-linked { min-height: 290px; }
 .service-card-linked:hover { transform: translateY(-5px); box-shadow: 0 25px 55px rgb(5 8 35 / .25); }
+.service-card-linked:active { transform: translateY(-1px) scale(.985); }
 .service-card-linked:focus-visible { outline: 3px solid #e9c778; outline-offset: 4px; }
+.service-icon { transition: transform .32s cubic-bezier(.2,.8,.2,1); }
+.service-card:hover .service-icon { transform: translateY(-3px) rotate(-7deg) scale(1.08); }
 .service-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: .8rem; }
 .service-number { color: #777c9c; font-size: .68rem; font-weight: 850; letter-spacing: .14em; white-space: nowrap; }
 .service-card h4 { margin-top: 1.5rem; font-family: var(--font-cormorant), Georgia, serif; font-size: clamp(1.7rem, 2.5vw, 2rem); font-weight: 700; line-height: 1.06; }
@@ -394,7 +415,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   transition: transform .2s ease, background-color .2s ease;
 }
 .calendar-card:nth-child(2) { background: #ede6f3; }
-.calendar-card:hover { transform: translateY(-5px); background: #f8f1e2; }
+.calendar-card:hover { transform: translateY(-5px); border-color: #c9aa6f; background: #f8f1e2; box-shadow: 0 22px 50px rgb(42 47 135 / .13); }
+.calendar-card:active { transform: translateY(-1px) scale(.985); }
 .calendar-card > span:last-child { margin-top: auto; }
 
 .footer { border-top: 1px solid rgb(255 255 255 / .12); background: #12172c; padding-block: 4rem 2rem; color: #fff; }
@@ -420,7 +442,27 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   .service-card-linked, .service-grid-one .service-card { min-height: 0; }
 }
 @media (max-width: 420px) { .division-grid { grid-template-columns: 1fr; } .division-summary { min-height: 140px; } }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes heroEnter { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes artEnter { from { opacity: 0; transform: translate(25px, 18px) scale(.97); } to { opacity: 1; transform: translate(0, 0) scale(1); } }
+  @keyframes cardReveal { from { opacity: 0; filter: blur(4px); } to { opacity: 1; filter: blur(0); } }
+  @keyframes dialogEnter { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .hero-copy { animation: heroEnter .85s cubic-bezier(.2,.8,.2,1) both; }
+  .verse-wrap { animation: artEnter 1.05s .12s cubic-bezier(.2,.8,.2,1) both; }
+  .division-dialog[open] { animation: dialogEnter .3s cubic-bezier(.2,.8,.2,1) both; }
+  .motion-ready [data-reveal="section"] { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+  .motion-ready [data-reveal="section"].is-visible { opacity: 1; transform: translateY(0); }
+  .motion-ready [data-reveal="card"] { opacity: 0; }
+  .motion-ready [data-reveal="card"].is-visible { animation: cardReveal .7s cubic-bezier(.2,.8,.2,1) var(--reveal-delay, 0ms) both; }
+  .division-grid > :nth-child(2), .service-grid > :nth-child(2) { --reveal-delay: 70ms; }
+  .division-grid > :nth-child(3), .service-grid > :nth-child(3) { --reveal-delay: 140ms; }
+  .division-grid > :nth-child(4), .service-grid > :nth-child(4) { --reveal-delay: 210ms; }
+  .division-grid > :nth-child(5) { --reveal-delay: 280ms; }
+  .division-grid > :nth-child(6) { --reveal-delay: 350ms; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  .division-summary:hover, .division-summary:active, .division-summary:hover .division-summary-action svg, .service-card:hover, .service-card:active, .service-card:hover .service-icon, .calendar-card:hover, .calendar-card:active, .button:hover, .button:active, .verse-wrap:hover .hero-art-image { transform: none !important; }
+  .division-summary::after { display: none; }
 }

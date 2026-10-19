@@ -196,10 +196,12 @@ function ExternalLink({
   href,
   children,
   className = "",
+  reveal = false,
 }: {
   href: string;
   children: React.ReactNode;
   className?: string;
+  reveal?: boolean;
 }) {
   return (
     <a
@@ -207,6 +209,7 @@ function ExternalLink({
       target="_blank"
       rel="noopener noreferrer"
       className={className}
+      data-reveal={reveal ? "card" : undefined}
     >
       {children}
     </a>
@@ -234,9 +237,9 @@ function ServiceCard({ service }: { service: Service }) {
   const className = `service-card accent-${service.accent}${service.href ? " service-card-linked" : ""}`;
 
   return service.href ? (
-    <ExternalLink href={service.href} className={className}>{content}</ExternalLink>
+    <ExternalLink href={service.href} className={className} reveal>{content}</ExternalLink>
   ) : (
-    <article className={className}>{content}</article>
+    <article className={className} data-reveal="card">{content}</article>
   );
 }
 
@@ -267,13 +270,35 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeDivision, setActiveDivision] = useState<(typeof divisions)[number] | null>(null);
   const divisionDialog = useRef<HTMLDialogElement>(null);
+  const page = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const root = page.current;
+    if (!root || !window.IntersectionObserver || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -35px 0px" });
+
+    root.querySelectorAll<HTMLElement>("[data-reveal]").forEach((element) => observer.observe(element));
+    root.classList.add("motion-ready");
+    return () => {
+      observer.disconnect();
+      root.classList.remove("motion-ready");
+    };
+  }, []);
 
   useEffect(() => {
     if (activeDivision && !divisionDialog.current?.open) divisionDialog.current?.showModal();
   }, [activeDivision]);
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#faf8f4] text-[#1c2146]">
+    <main ref={page} className="min-h-screen overflow-x-hidden bg-[#faf8f4] text-[#1c2146]">
       <header className="site-header">
         <div className="page-shell flex h-[76px] items-center justify-between gap-5">
           <a
@@ -333,14 +358,15 @@ export default function Home() {
 
       <section id="beranda" className="hero-section">
         <div className="page-shell relative z-10 grid items-center gap-12 py-20 pt-36 lg:min-h-[760px] lg:grid-cols-[1.12fr_.88fr] lg:gap-16 lg:py-24 lg:pt-32">
-          <div className="max-w-[760px]">
-            <div className="eyebrow"><Sparkles size={15} aria-hidden="true" /> RUANG KERJA PELAYAN LITURGI</div>
+          <div className="hero-copy max-w-[760px]">
+            <div className="eyebrow"><Sparkles size={15} aria-hidden="true" /> SEKSI LITURGI · PAROKI MANGGA BESAR</div>
             <h1 className="mt-7 max-w-[820px] font-serif text-[clamp(3.2rem,7vw,6.4rem)] font-semibold leading-[.95] tracking-[-.055em]">
               Liturgi yang <span className="hero-highlight">hidup.</span> Pelayanan yang sepenuh hati.
             </h1>
             <p className="mt-7 max-w-xl text-base leading-8 text-[#e1e5ff] sm:text-lg">
-              Pusat informasi &amp; manajemen Tata Laksana Perayaan dan Ibadat.
-              Mewujudkan perayaan liturgi yang benar, indah, hidup dan memerdekakan.
+              Ruang bersama untuk mengenal pelayanan Seksi Liturgi Paroki Mangga Besar,
+              menemukan sumber daya, dan mengikuti kalender liturgi. Bersama, kita merawat
+              perayaan iman yang khidmat dan bermakna.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a href="#layanan" className="button button-primary justify-center">
@@ -381,7 +407,7 @@ export default function Home() {
 
       <section id="tentang" className="section-space scroll-mt-20">
         <div className="page-shell">
-          <div className="section-intro">
+          <div className="section-intro" data-reveal="section">
             <span className="section-kicker">01 / TENTANG KAMI</span>
             <h2 className="section-heading">Wajah di balik <em>pelayanan.</em></h2>
             <p>
@@ -391,7 +417,7 @@ export default function Home() {
           </div>
 
           <div className="org-chart mt-12 sm:mt-16">
-            <article className="leader-card">
+            <article className="leader-card" data-reveal="card">
               <div className="leader-icon"><Cross size={24} strokeWidth={1.7} aria-hidden="true" /></div>
               <div>
                 <span className="card-eyebrow">KETUA SEKSI LITURGI</span>
@@ -412,6 +438,7 @@ export default function Home() {
                   key={division.number}
                   type="button"
                   className={`division-summary accent-${division.accent}`}
+                  data-reveal="card"
                   onClick={() => setActiveDivision(division)}
                   aria-label={`Lihat pengurus Bidang ${Number(division.number)}: ${division.title}`}
                 >
@@ -471,7 +498,7 @@ export default function Home() {
 
       <section id="layanan" className="section-space services-section scroll-mt-20">
         <div className="page-shell">
-          <div className="section-intro section-intro-light">
+          <div className="section-intro section-intro-light" data-reveal="section">
             <span className="section-kicker">02 / PILAR LAYANAN</span>
             <h2 className="section-heading">Cari yang kamu butuhkan.<br /><em>Siap melayani.</em></h2>
             <p>Sepuluh bentuk pelayanan yang saling melengkapi, dari pendampingan petugas hingga perlengkapan perayaan.</p>
@@ -479,7 +506,7 @@ export default function Home() {
           <div className="service-groups">
             {serviceGroups.map((group) => (
               <div className="service-group" key={group.label}>
-                <h3>{group.label}</h3>
+                <h3 data-reveal="section">{group.label}</h3>
                 <div className={`service-grid ${group.columns}`}>
                   {group.services.map((service) => <ServiceCard key={service.number} service={service} />)}
                 </div>
@@ -491,7 +518,7 @@ export default function Home() {
 
       <section id="kalender" className="section-space calendar-section scroll-mt-20">
         <div className="page-shell grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-16">
-          <div>
+          <div data-reveal="section">
             <span className="section-kicker">03 / KALENDER LITURGI</span>
             <h2 className="section-heading mt-5">Menjalani tahun<br /><em>bersama Gereja.</em></h2>
             <p className="mt-5 max-w-lg text-base leading-8 text-[#626784]">
@@ -508,7 +535,7 @@ export default function Home() {
               { year: "2026", href: links.calendar2026, index: "01" },
               { year: "2027", href: links.calendar2027, index: "02" },
             ].map((item) => (
-              <ExternalLink key={item.year} href={item.href} className="calendar-card group">
+              <ExternalLink key={item.year} href={item.href} className="calendar-card group" reveal>
                 <span className="flex items-center justify-between text-sm font-bold text-[#676e98]">
                   KALENDER LITURGI <span>{item.index} / 02</span>
                 </span>
@@ -525,7 +552,7 @@ export default function Home() {
       </section>
 
       <footer className="footer">
-        <div className="page-shell grid gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_.8fr_1fr]">
+        <div className="page-shell grid gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_.8fr_1fr]" data-reveal="section">
           <div>
             <div className="flex items-center gap-4"><BrandLogos large /><div><p className="text-base font-extrabold">Seksi Liturgi</p><p className="text-xs font-bold uppercase tracking-[.15em] text-[#b8c2ff]">Paroki Mangga Besar</p></div></div>
             <p className="mt-6 max-w-sm text-sm leading-7 text-[#c3c9e4]">
