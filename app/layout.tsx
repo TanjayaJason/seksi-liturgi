@@ -10,7 +10,7 @@ export const metadata:Metadata = { title:"Seksi Liturgi | Paroki Mangga Besar", 
 export default function RootLayout({ children }:Readonly<{ children:React.ReactNode }>) {
   return <html lang="id" suppressHydrationWarning>
     <head>
-      <script dangerouslySetInnerHTML={{ __html: 'try{if(sessionStorage.getItem("liturgi-splash-seen")==="1"||matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("splash-bypass")}catch(e){}' }} />
+      <script dangerouslySetInnerHTML={{ __html: 'try{if(sessionStorage.getItem("liturgi-splash-seen")==="1")document.documentElement.classList.add("splash-bypass")}catch(e){}' }} />
     </head>
     <body className={`${manrope.variable} ${cormorant.variable} antialiased`}>{children}</body>
   </html>;

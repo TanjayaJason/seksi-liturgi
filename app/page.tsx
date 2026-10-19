@@ -280,7 +280,7 @@ export default function Home() {
     } catch {
       // The splash still works when session storage is unavailable.
     }
-    if (seen || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (seen) {
       setSplashState("hidden");
       return;
     }
