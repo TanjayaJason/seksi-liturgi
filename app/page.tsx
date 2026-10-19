@@ -14,7 +14,7 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const links = {
   schedule:
@@ -47,12 +47,13 @@ const chair: Person = {
 const divisions: {
   number: string;
   title: string;
+  shortTitle: string;
   deputy: Person;
   groups: Group[];
   accent: string;
 }[] = [
   {
-    number: "01", title: "Pendampingan Bidang 1", accent: "violet",
+    number: "01", title: "Pendampingan Parsius, Santaris, dan Caeremoniarius", shortTitle: "Parsius, Santaris & Caeremoniarius", accent: "violet",
     deputy: { name: "Dionisius Matthew Reinhart Budiman", birthDate: "5 Oktober 2006", region: "Keagungan" },
     groups: [
       { title: "Ketua Subseksi Putra Altar St. Tarsisius", people: [{ name: "Benedictus Yongen Given Rombe", birthDate: "21 Juli 2012", region: "Dwiwarna" }] },
@@ -61,7 +62,7 @@ const divisions: {
     ],
   },
   {
-    number: "02", title: "Pendampingan Bidang 2", accent: "blue",
+    number: "02", title: "Pendampingan Lektor, Pemazmur, dan Pasdior", shortTitle: "Lektor, Pemazmur & Pasdior", accent: "blue",
     deputy: { name: "Maria Stephanie Indri Putri", birthDate: "2 Juli 1989", region: "Taman Sari" },
     groups: [
       { title: "Ketua Subseksi Lektor St. Hieronimus", people: [{ name: "Johanes Denny Indrawan", birthDate: "14 Desember 1981", region: "Kebon Jeruk" }] },
@@ -70,7 +71,7 @@ const divisions: {
     ],
   },
   {
-    number: "03", title: "Pendampingan Bidang 3", accent: "coral",
+    number: "03", title: "Pendampingan Prodiakon, Kolatan, dan Dekorasi Altar", shortTitle: "Prodiakon, Kolatan & Dekorasi Altar", accent: "coral",
     deputy: { name: "Caecilia Tjen Lydia", birthDate: "12 Desember 1972", region: "Mangga Besar 1" },
     groups: [
       { title: "Ketua Subseksi Kolatan St. Zita", people: [{ name: "Clarissa Stephanie Tediana", birthDate: "4 September 1984", region: "Taman Sari" }] },
@@ -79,7 +80,7 @@ const divisions: {
     ],
   },
   {
-    number: "04", title: "Tata Laksana, Perayaan, dan Ibadat", accent: "violet",
+    number: "04", title: "Tata Laksana, Perayaan, dan Ibadat", shortTitle: "Tata Laksana, Perayaan & Ibadat", accent: "violet",
     deputy: { name: "Anthony Edward Tanjaya Jason Winata", birthDate: "2 April 2004", region: "Kartini" },
     groups: [
       { title: "Staff Musica Liturgia", people: [{ name: "Alfonsus Yosef Gabriel Syamsudin", birthDate: "10 Agustus 2007", region: "Kartini" }] },
@@ -94,7 +95,7 @@ const divisions: {
     ],
   },
   {
-    number: "05", title: "Administrasi dan Komunikasi", accent: "blue",
+    number: "05", title: "Administrasi dan Komunikasi", shortTitle: "Administrasi & Komunikasi", accent: "blue",
     deputy: { name: "Florentina Aurelia Regina Sabina", birthDate: "18 Juni 2003", region: "Keagungan" },
     groups: [
       { title: "Staff Notulensi dan Desain Visual", people: [
@@ -114,7 +115,7 @@ const divisions: {
     ],
   },
   {
-    number: "06", title: "Barang Liturgi dan Benda Devosi", accent: "coral",
+    number: "06", title: "Barang Liturgi dan Benda Devosi", shortTitle: "Barang Liturgi & Benda Devosi", accent: "coral",
     deputy: { name: "Dorothea Dermawaty Purba", birthDate: "17 Maret 1963", region: "Tangki" },
     groups: [
       { title: "Staff Inventaris", people: [
@@ -131,7 +132,7 @@ const divisions: {
 function PersonDetails({ person }: { person: Person }) {
   return (
     <p className="person-details">
-      <span>Lahir {person.birthDate}</span>
+      <span>{person.birthDate}</span>
       <span aria-hidden="true">·</span>
       <span>Wilayah {person.region}</span>
     </p>
@@ -214,6 +215,12 @@ function BrandLogos({ large = false }: { large?: boolean }) {
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeDivision, setActiveDivision] = useState<(typeof divisions)[number] | null>(null);
+  const divisionDialog = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    if (activeDivision && !divisionDialog.current?.open) divisionDialog.current?.showModal();
+  }, [activeDivision]);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#faf8f4] text-[#1c2146]">
@@ -351,39 +358,66 @@ export default function Home() {
 
             <div className="division-grid">
               {divisions.map((division) => (
-                <article key={division.number} className={`division-card accent-${division.accent}`}>
-                  <div className="division-heading">
-                    <span className="division-number">BIDANG {division.number}</span>
-                    <h3>{division.title}</h3>
-                  </div>
-                  <div className="division-deputy">
-                    <p className="card-eyebrow">WAKIL {Number(division.number)}</p>
-                    <p className="person-name">{division.deputy.name}</p>
-                    <PersonDetails person={division.deputy} />
-                  </div>
-                  <div className="division-groups">
-                    {division.groups.map((group) => (
-                      <div className="division-group" key={group.title}>
-                        <h4>{group.title}</h4>
-                        {group.people.length ? (
-                          <ul>
-                            {group.people.map((person) => (
-                              <li key={person.name}>
-                                <p className="person-name">{person.name}</p>
-                                <PersonDetails person={person} />
-                              </li>
-                            ))}
-                          </ul>
-                        ) : <p className="vacant-role">Belum terisi</p>}
-                      </div>
-                    ))}
-                  </div>
-                </article>
+                <button
+                  key={division.number}
+                  type="button"
+                  className={`division-summary accent-${division.accent}`}
+                  onClick={() => setActiveDivision(division)}
+                  aria-label={`Lihat pengurus Bidang ${Number(division.number)}: ${division.title}`}
+                >
+                  <span className="division-summary-number">BIDANG {division.number}</span>
+                  <span className="division-summary-title">{division.shortTitle}</span>
+                  <span className="division-summary-action">Lihat pengurus <ArrowUpRight size={17} aria-hidden="true" /></span>
+                </button>
               ))}
             </div>
           </div>
         </div>
       </section>
+
+      <dialog
+        ref={divisionDialog}
+        className={`division-dialog accent-${activeDivision?.accent ?? "violet"}`}
+        aria-labelledby="division-dialog-title"
+        onClose={() => setActiveDivision(null)}
+        onClick={(event) => { if (event.target === event.currentTarget) divisionDialog.current?.close(); }}
+      >
+        {activeDivision && (
+          <div className="division-detail">
+            <div className="division-dialog-header">
+              <div>
+                <span className="division-number">BIDANG {activeDivision.number} / 06</span>
+                <h2 id="division-dialog-title">{activeDivision.title}</h2>
+              </div>
+              <button type="button" className="division-dialog-close" onClick={() => divisionDialog.current?.close()} aria-label="Tutup detail bidang">
+                <X size={20} aria-hidden="true" />
+              </button>
+            </div>
+            <div className="division-deputy">
+              <p className="card-eyebrow">WAKIL {Number(activeDivision.number)}</p>
+              <p className="person-name">{activeDivision.deputy.name}</p>
+              <PersonDetails person={activeDivision.deputy} />
+            </div>
+            <div className="division-groups">
+              {activeDivision.groups.map((group) => (
+                <div className="division-group" key={group.title}>
+                  <h3>{group.title}</h3>
+                  {group.people.length ? (
+                    <ul>
+                      {group.people.map((person) => (
+                        <li key={person.name}>
+                          <p className="person-name">{person.name}</p>
+                          <PersonDetails person={person} />
+                        </li>
+                      ))}
+                    </ul>
+                  ) : <p className="vacant-role">-</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </dialog>
 
       <section id="layanan" className="section-space services-section scroll-mt-20">
         <div className="page-shell">
