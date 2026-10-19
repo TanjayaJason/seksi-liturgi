@@ -367,10 +367,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   padding: 1.6rem;
   color: #20244e;
   box-shadow: 0 10px 24px rgb(5 8 35 / .06);
-  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease, background-color .28s ease;
 }
-.service-card::before { position: absolute; inset: 0 auto auto 0; width: 0; height: 4px; border-radius: 25px 0 0; background: var(--accent-color); content: ""; transition: width .45s ease; }
-.service-card:hover::before { width: 100%; }
+.service-card:hover { border-color: var(--accent-color); background-color: var(--accent-bg); }
 .service-card:not(.service-card-linked):hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgb(5 8 35 / .18); }
 .service-card-linked { min-height: 290px; }
 .service-card-linked:hover { transform: translateY(-5px); box-shadow: 0 25px 55px rgb(5 8 35 / .25); }
@@ -412,7 +411,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   padding: 1.7rem;
   color: #252960;
   box-shadow: 0 16px 45px rgb(42 47 135 / .055);
-  transition: transform .2s ease, background-color .2s ease;
+  transition: transform .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
 .calendar-card:nth-child(2) { background: #ede6f3; }
 .calendar-card:hover { transform: translateY(-5px); border-color: #c9aa6f; background: #f8f1e2; box-shadow: 0 22px 50px rgb(42 47 135 / .13); }
@@ -445,13 +444,13 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
 @media (prefers-reduced-motion: no-preference) {
   @keyframes heroEnter { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes artEnter { from { opacity: 0; transform: translate(25px, 18px) scale(.97); } to { opacity: 1; transform: translate(0, 0) scale(1); } }
-  @keyframes cardReveal { from { opacity: 0; filter: blur(4px); } to { opacity: 1; filter: blur(0); } }
+  @keyframes cardReveal { from { opacity: 0; translate: 0 30px; scale: .97; } to { opacity: 1; translate: 0 0; scale: 1; } }
   @keyframes dialogEnter { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
   .hero-copy { animation: heroEnter .85s cubic-bezier(.2,.8,.2,1) both; }
   .verse-wrap { animation: artEnter 1.05s .12s cubic-bezier(.2,.8,.2,1) both; }
   .division-dialog[open] { animation: dialogEnter .3s cubic-bezier(.2,.8,.2,1) both; }
-  .motion-ready [data-reveal="section"] { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
-  .motion-ready [data-reveal="section"].is-visible { opacity: 1; transform: translateY(0); }
+  .motion-ready [data-reveal="section"] { opacity: 0; translate: 0 36px; transition: opacity .75s ease, translate .75s cubic-bezier(.2,.8,.2,1); }
+  .motion-ready [data-reveal="section"].is-visible { opacity: 1; translate: 0 0; }
   .motion-ready [data-reveal="card"] { opacity: 0; }
   .motion-ready [data-reveal="card"].is-visible { animation: cardReveal .7s cubic-bezier(.2,.8,.2,1) var(--reveal-delay, 0ms) both; }
   .division-grid > :nth-child(2), .service-grid > :nth-child(2) { --reveal-delay: 70ms; }
@@ -463,6 +462,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  .motion-ready [data-reveal] { opacity: 0; transition: opacity .28s ease !important; }
+  .motion-ready [data-reveal].is-visible { opacity: 1; }
   .division-summary:hover, .division-summary:active, .division-summary:hover .division-summary-action svg, .service-card:hover, .service-card:active, .service-card:hover .service-icon, .calendar-card:hover, .calendar-card:active, .button:hover, .button:active, .verse-wrap:hover .hero-art-image { transform: none !important; }
   .division-summary::after { display: none; }
 }

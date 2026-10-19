@@ -274,21 +274,34 @@ export default function Home() {
 
   useEffect(() => {
     const root = page.current;
-    if (!root || !window.IntersectionObserver || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!root) return;
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
+    const elements = root.querySelectorAll<HTMLElement>("[data-reveal]");
+    let frame = 0;
+    const updateVisibility = () => {
+      frame = 0;
+      const height = window.innerHeight;
+      elements.forEach((element) => {
+        const { top, bottom } = element.getBoundingClientRect();
+        if (top < height * 0.88 && bottom > height * 0.08) {
+          element.classList.add("is-visible");
+        } else if (bottom < -80 || top > height + 80) {
+          element.classList.remove("is-visible");
         }
       });
-    }, { threshold: 0.08, rootMargin: "0px 0px -35px 0px" });
+    };
+    const scheduleUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateVisibility);
+    };
 
-    root.querySelectorAll<HTMLElement>("[data-reveal]").forEach((element) => observer.observe(element));
     root.classList.add("motion-ready");
+    scheduleUpdate();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (frame) window.cancelAnimationFrame(frame);
       root.classList.remove("motion-ready");
     };
   }, []);
