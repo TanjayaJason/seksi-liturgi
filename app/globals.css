@@ -64,6 +64,34 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
 .page-shell { width: min(100% - 2.5rem, 1240px); margin-inline: auto; }
 .section-space { padding-block: clamp(5rem, 8vw, 7.5rem); }
 
+@keyframes splashFallback { 0%, 72% { opacity: 1; visibility: visible; } 100% { opacity: 0; visibility: hidden; pointer-events: none; } }
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: #1c2146;
+  text-align: center;
+  animation: splashFallback 1.8s forwards;
+  transition: opacity .4s ease, visibility .4s ease;
+}
+.splash-screen.is-leaving { visibility: hidden; opacity: 0; pointer-events: none; animation: none; }
+.splash-bypass .splash-screen { display: none; }
+.splash-content { width: min(100% - 2rem, 520px); }
+.splash-logos { display: flex; align-items: center; justify-content: center; gap: clamp(1.3rem, 5vw, 2.7rem); }
+.splash-logos img { width: clamp(86px, 14vw, 124px); height: clamp(86px, 14vw, 124px); object-fit: contain; }
+.splash-divider { width: 1px; height: 74px; background: #e3ddcf; }
+.splash-title { margin-top: 2rem; font-family: var(--font-cormorant), Georgia, serif; font-size: clamp(2.15rem, 5vw, 3.3rem); font-weight: 700; line-height: 1.05; }
+.splash-progress { display: block; width: 80px; height: 2px; margin: 1.8rem auto 0; background: #c8a764; transform-origin: left; }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes splashEnter { from { opacity: 0; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
+  @keyframes splashProgress { from { scale: 0 1; } to { scale: 1 1; } }
+  .splash-content { animation: splashEnter .65s ease-out both; }
+  .splash-progress { animation: splashProgress 1.2s .1s ease-out both; }
+}
+
 .site-header {
   position: fixed;
   inset: 0 0 auto;

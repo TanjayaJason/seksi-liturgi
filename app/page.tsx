@@ -268,11 +268,45 @@ function BrandLogos({ large = false }: { large?: boolean }) {
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [splashState, setSplashState] = useState<"visible" | "leaving" | "hidden">("visible");
   const [activeDivision, setActiveDivision] = useState<(typeof divisions)[number] | null>(null);
   const divisionDialog = useRef<HTMLDialogElement>(null);
   const page = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    let seen = false;
+    try {
+      seen = window.sessionStorage.getItem("liturgi-splash-seen") === "1";
+    } catch {
+      // The splash still works when session storage is unavailable.
+    }
+    if (seen || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setSplashState("hidden");
+      return;
+    }
+
+    try {
+      window.sessionStorage.setItem("liturgi-splash-seen", "1");
+    } catch {
+      // A storage restriction should not prevent the page from opening.
+    }
+    const leaveTimer = window.setTimeout(() => setSplashState("leaving"), 1250);
+    const hideTimer = window.setTimeout(() => setSplashState("hidden"), 1650);
+    return () => {
+      window.clearTimeout(leaveTimer);
+      window.clearTimeout(hideTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (splashState === "hidden") return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [splashState]);
+
+  useEffect(() => {
+    if (splashState !== "hidden") return;
     const root = page.current;
     if (!root) return;
 
@@ -304,7 +338,7 @@ export default function Home() {
       if (frame) window.cancelAnimationFrame(frame);
       root.classList.remove("motion-ready");
     };
-  }, []);
+  }, [splashState]);
 
   useEffect(() => {
     if (activeDivision && !divisionDialog.current?.open) divisionDialog.current?.showModal();
@@ -312,6 +346,19 @@ export default function Home() {
 
   return (
     <main ref={page} className="min-h-screen overflow-x-hidden bg-[#faf8f4] text-[#1c2146]">
+      {splashState !== "hidden" && (
+        <div className={`splash-screen${splashState === "leaving" ? " is-leaving" : ""}`} role="status" aria-label="Memuat Seksi Liturgi Paroki Mangga Besar">
+          <div className="splash-content">
+            <div className="splash-logos">
+              <img src="/logo-paroki-mangga-besar.png" alt="Logo Paroki Mangga Besar" width={468} height={442} />
+              <span className="splash-divider" aria-hidden="true" />
+              <img src="/logo-seksi-liturgi.png" alt="Logo Seksi Liturgi" width={1080} height={1080} />
+            </div>
+            <p className="splash-title">Seksi Liturgi<br />Paroki Mangga Besar</p>
+            <span className="splash-progress" aria-hidden="true" />
+          </div>
+        </div>
+      )}
       <header className="site-header">
         <div className="page-shell flex h-[76px] items-center justify-between gap-5">
           <a
