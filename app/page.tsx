@@ -37,29 +37,106 @@ const navItems = [
   { label: "Kalender Liturgi", href: "#kalender" },
 ];
 
-const teams = [
+type Person = { name: string; birthDate: string; region: string };
+type Group = { title: string; people: Person[] };
+
+const chair: Person = {
+  name: "Eugene Sri Mulyani", birthDate: "17 November 1973", region: "Ancol",
+};
+
+const divisions: {
+  number: string;
+  title: string;
+  deputy: Person;
+  groups: Group[];
+  accent: string;
+}[] = [
   {
-    number: "01",
-    icon: Music2,
-    title: "Musica Liturgia",
-    people: ["Alfonsus Yosef Gabriel Syamsudin"],
-    accent: "violet",
+    number: "01", title: "Pendampingan Bidang 1", accent: "violet",
+    deputy: { name: "Dionisius Matthew Reinhart Budiman", birthDate: "5 Oktober 2006", region: "Keagungan" },
+    groups: [
+      { title: "Ketua Subseksi Putra Altar St. Tarsisius", people: [{ name: "Benedictus Yongen Given Rombe", birthDate: "21 Juli 2012", region: "Dwiwarna" }] },
+      { title: "Ketua Subseksi Putri Sakristi St. Jeanne d’Arc", people: [{ name: "Felice Perpetua Xelica Electra Verrenna", birthDate: "30 Desember 2011", region: "Kartini" }] },
+      { title: "Ketua Subseksi Caeremoniarius St. Yohanes Berchmans", people: [{ name: "Alexius Rayhan Adilla Trixie", birthDate: "12 Desember 2008", region: "Kartini" }] },
+    ],
   },
   {
-    number: "02",
-    icon: UsersRound,
-    title: "Tata Gerak Liturgi",
-    people: ["Bonifasius Maxien Mario", "Vinsensius Calvine Jonathan"],
-    accent: "blue",
+    number: "02", title: "Pendampingan Bidang 2", accent: "blue",
+    deputy: { name: "Maria Stephanie Indri Putri", birthDate: "2 Juli 1989", region: "Taman Sari" },
+    groups: [
+      { title: "Ketua Subseksi Lektor St. Hieronimus", people: [{ name: "Johanes Denny Indrawan", birthDate: "14 Desember 1981", region: "Kebon Jeruk" }] },
+      { title: "Ketua Subseksi Pemazmur St. Cicilia", people: [{ name: "Alfonsus Yosef Gabriel Syamsudin", birthDate: "10 Agustus 2007", region: "Kartini" }] },
+      { title: "Ketua Subseksi Pasdior St. Romanus", people: [{ name: "Natalia Netty Coa", birthDate: "11 Juli 1975", region: "Pang. Jayakarta" }] },
+    ],
   },
   {
-    number: "03",
-    icon: FileText,
-    title: "Misa dan Ibadat Khusus",
-    people: ["Lim Valencia Salvina Philicia Teana", "Bridgia Livia Marcella"],
-    accent: "coral",
+    number: "03", title: "Pendampingan Bidang 3", accent: "coral",
+    deputy: { name: "Caecilia Tjen Lydia", birthDate: "12 Desember 1972", region: "Mangga Besar 1" },
+    groups: [
+      { title: "Ketua Subseksi Kolatan St. Zita", people: [{ name: "Clarissa Stephanie Tediana", birthDate: "4 September 1984", region: "Taman Sari" }] },
+      { title: "Ketua Subseksi Prodiakon St. Petrus dan Paulus", people: [{ name: "Vinsensius Dominikus Budiono", birthDate: "24 Januari 1973", region: "Kartini" }] },
+      { title: "Ketua Subseksi Dekorasi Altar", people: [] },
+    ],
+  },
+  {
+    number: "04", title: "Tata Laksana, Perayaan, dan Ibadat", accent: "violet",
+    deputy: { name: "Anthony Edward Tanjaya Jason Winata", birthDate: "2 April 2004", region: "Kartini" },
+    groups: [
+      { title: "Staff Musica Liturgia", people: [{ name: "Alfonsus Yosef Gabriel Syamsudin", birthDate: "10 Agustus 2007", region: "Kartini" }] },
+      { title: "Staff Tata Gerak Liturgi", people: [
+        { name: "Vinsensius Calvine Jonathan", birthDate: "8 Oktober 1999", region: "Kebon Jeruk" },
+        { name: "Bonifasius Maxien Mario", birthDate: "15 Mei 2002", region: "Non-Paroki" },
+      ] },
+      { title: "Staff Misa dan Ibadat Khusus", people: [
+        { name: "Bridgia Livia Marcella", birthDate: "10 April 2008", region: "Kartini" },
+        { name: "Lim Valencia Salvina Philicia Teana", birthDate: "23 Mei 2006", region: "Pang. Jayakarta" },
+      ] },
+    ],
+  },
+  {
+    number: "05", title: "Administrasi dan Komunikasi", accent: "blue",
+    deputy: { name: "Florentina Aurelia Regina Sabina", birthDate: "18 Juni 2003", region: "Keagungan" },
+    groups: [
+      { title: "Staff Notulensi dan Desain Visual", people: [
+        { name: "Timotius Vincent Halim", birthDate: "22 Mei 2004", region: "Kartini" },
+      ] },
+      { title: "Staff SAPA", people: [
+        { name: "Fransiskus De Sales Kenneth Hendra", birthDate: "16 Oktober 2006", region: "Mangga Besar 1" },
+        { name: "Evangeline Jessica Evelyn Muksin", birthDate: "5 September 2008", region: "Kartini" },
+      ] },
+      { title: "Staff Proposal LPJ", people: [
+        { name: "Ignatius Kelvin Leonardo", birthDate: "12 Januari 1997", region: "Dwiwarna" },
+        { name: "Simon Zendy", birthDate: "28 Oktober 1986", region: "Keagungan" },
+      ] },
+      { title: "Staff Komunikasi SLL", people: [
+        { name: "Emerentiana Yanti Liani", birthDate: "1 November 1967", region: "Kartini" },
+      ] },
+    ],
+  },
+  {
+    number: "06", title: "Barang Liturgi dan Benda Devosi", accent: "coral",
+    deputy: { name: "Dorothea Dermawaty Purba", birthDate: "17 Maret 1963", region: "Tangki" },
+    groups: [
+      { title: "Staff Inventaris", people: [
+        { name: "Giovana Susanna", birthDate: "7 November 1978", region: "Dwiwarna" },
+        { name: "Christian Nathanael Winoto", birthDate: "22 November 2008", region: "Mangga Dua-Kota" },
+      ] },
+      { title: "Staff Pengadaan Barang", people: [
+        { name: "Gabriela Jocelyn Nathaniel", birthDate: "18 Maret 2007", region: "Mangga Dua-Kota" },
+      ] },
+    ],
   },
 ];
+
+function PersonDetails({ person }: { person: Person }) {
+  return (
+    <p className="person-details">
+      <span>Lahir {person.birthDate}</span>
+      <span aria-hidden="true">·</span>
+      <span>Wilayah {person.region}</span>
+    </p>
+  );
+}
 
 const services = [
   {
@@ -251,8 +328,8 @@ export default function Home() {
             <span className="section-kicker">01 / TENTANG KAMI</span>
             <h2 className="section-heading">Wajah di balik <em>pelayanan.</em></h2>
             <p>
-              Seksi Liturgi menyiapkan pelayanan liturgi bersama. Satu koordinasi,
-              tiga subdivisi yang berjalan setara dalam merawat perayaan iman.
+              Pengurus Seksi Liturgi Paroki Mangga Besar periode 2026–2029.
+              Ketua bersama enam wakil bidang dan timnya melayani perayaan iman.
             </p>
           </div>
 
@@ -260,9 +337,9 @@ export default function Home() {
             <article className="leader-card">
               <div className="leader-icon"><Cross size={24} strokeWidth={1.7} aria-hidden="true" /></div>
               <div>
-                <span className="card-eyebrow">WAKIL KETUA BIDANG 4</span>
-                <h3 className="person-name">Anthony Edward Tanjaya Jason Winata</h3>
-                <p>Bagian Tata Laksana, Perayaan, dan Ibadat</p>
+                <span className="card-eyebrow">KETUA SEKSI LITURGI</span>
+                <h3 className="person-name">{chair.name}</h3>
+                <PersonDetails person={chair} />
               </div>
               <span className="leader-sparkle" aria-hidden="true">✦</span>
             </article>
@@ -272,32 +349,37 @@ export default function Home() {
               <span className="org-rail" />
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3 lg:gap-5">
-              {teams.map((team) => {
-                const Icon = team.icon;
-                return (
-                  <article key={team.title} className={`team-card accent-${team.accent}`}>
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="team-icon"><Icon size={23} strokeWidth={1.8} aria-hidden="true" /></div>
-                      <span className="team-number">{team.number} / 03</span>
-                    </div>
-                    <h3 className="mt-7 font-serif text-[1.75rem] font-semibold leading-tight">
-                      {team.title}
-                    </h3>
-                    <div className="mt-7 border-t border-current/10 pt-5">
-                      <p className="card-eyebrow">STAF</p>
-                      <ul className="mt-3 space-y-3">
-                        {team.people.map((person) => (
-                          <li key={person} className="person-name flex gap-2.5">
-                            <span className="mt-[.48rem] h-1.5 w-1.5 shrink-0 rounded-full bg-current" aria-hidden="true" />
-                            {person}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </article>
-                );
-              })}
+            <div className="division-grid">
+              {divisions.map((division) => (
+                <article key={division.number} className={`division-card accent-${division.accent}`}>
+                  <div className="division-heading">
+                    <span className="division-number">BIDANG {division.number}</span>
+                    <h3>{division.title}</h3>
+                  </div>
+                  <div className="division-deputy">
+                    <p className="card-eyebrow">WAKIL {Number(division.number)}</p>
+                    <p className="person-name">{division.deputy.name}</p>
+                    <PersonDetails person={division.deputy} />
+                  </div>
+                  <div className="division-groups">
+                    {division.groups.map((group) => (
+                      <div className="division-group" key={group.title}>
+                        <h4>{group.title}</h4>
+                        {group.people.length ? (
+                          <ul>
+                            {group.people.map((person) => (
+                              <li key={person.name}>
+                                <p className="person-name">{person.name}</p>
+                                <PersonDetails person={person} />
+                              </li>
+                            ))}
+                          </ul>
+                        ) : <p className="vacant-role">Belum terisi</p>}
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </div>
