@@ -8,7 +8,7 @@ Alamat situs aktif akan diperbarui setelah nama proyek dan domain deployment dis
 
 - **Beranda:** pengantar pelayanan dan semboyan “Sollicitudine non pigri Spiritu Ferventes Domino Servientes” (Rome 12:11), dengan tombol menuju layanan dan jadwal petugas.
 - **Tentang Kami:** ketua dan enam kartu bidang yang membuka rincian wakil, subseksi atau staf, tanggal lahir, dan wilayah pengurus periode 2026–2029.
-- **Pilar Layanan:** tautan ke folder musik, panduan tata gerak, dan layanan surat kebutuhan acara khusus dalam Misa maupun ibadat khusus.
+- **Pilar Layanan:** sepuluh kartu dalam empat kelompok pelayanan; kartu musik, tata gerak, serta Misa dan ibadat khusus membuka sumber daya terkait.
 - **Kalender Liturgi:** tautan ke kalender tahun 2026 dan 2027.
 - **Footer:** logo paroki dan Seksi Liturgi, navigasi, serta alamat gereja.
 

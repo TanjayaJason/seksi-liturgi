@@ -3,16 +3,23 @@
 import {
   ArrowUpRight,
   BookOpenText,
+  Boxes,
   CalendarDays,
   ChevronDown,
+  ClipboardList,
   Cross,
+  FileCheck2,
   FileText,
   MapPin,
   Menu,
+  MessagesSquare,
   Music2,
+  PackagePlus,
   Sparkles,
   UsersRound,
+  WalletCards,
   X,
+  type LucideIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -139,33 +146,49 @@ function PersonDetails({ person }: { person: Person }) {
   );
 }
 
-const services = [
+type Service = {
+  number: string;
+  icon: LucideIcon;
+  title: string;
+  text: string;
+  accent: string;
+  href?: string;
+  action?: string;
+  tags?: string[];
+};
+
+const serviceGroups: { label: string; columns: string; services: Service[] }[] = [
   {
-    number: "01",
-    icon: Music2,
-    title: "Musica Liturgia",
-    text: "Partitur, katalog lagu liturgi, serta materi pendampingan untuk organis, pemazmur, dan tim koor.",
-    action: "Buka folder musik",
-    href: links.musica,
-    accent: "violet",
+    label: "Bidang 1–3 · Pendampingan", columns: "service-grid-one",
+    services: [{
+      number: "01", icon: UsersRound, title: "Pendampingan Subseksi", accent: "violet",
+      text: "Pembinaan dan koordinasi sembilan subseksi agar para petugas siap melayani dalam perayaan liturgi.",
+      tags: ["Parsius · Santaris · Caeremoniarius", "Lektor · Pemazmur · Pasdior", "Prodiakon · Kolatan · Dekorasi Altar"],
+    }],
   },
   {
-    number: "02",
-    icon: UsersRound,
-    title: "Tata Gerak Liturgi",
-    text: "Panduan sikap tubuh, alur prosesi, serta pelayanan misdinar dan lektor. Tim juga mendampingi latihan dan gladi resik agar perayaan berjalan tertib.",
-    action: "Baca panduan",
-    href: links.gerak,
-    accent: "blue",
+    label: "Bidang 4 · Perayaan dan ibadat", columns: "service-grid-three",
+    services: [
+      { number: "02", icon: Music2, title: "Musica Liturgia", accent: "violet", text: "Partitur, katalog lagu liturgi, serta materi pendampingan untuk organis, pemazmur, dan tim koor.", action: "Buka folder musik", href: links.musica },
+      { number: "03", icon: UsersRound, title: "Tata Gerak Liturgi", accent: "blue", text: "Panduan sikap tubuh dan alur prosesi untuk membantu persiapan serta latihan petugas liturgi.", action: "Baca panduan", href: links.gerak },
+      { number: "04", icon: FileText, title: "Misa & Ibadat Khusus", accent: "coral", text: "Koordinasi kebutuhan Misa dan ibadat khusus melalui layanan surat agar persiapan perayaan lebih tertata.", action: "Buka layanan surat", href: links.khusus },
+    ],
   },
   {
-    number: "03",
-    icon: FileText,
-    title: "Misa & Ibadat Khusus",
-    text: "Mengelola surat kebutuhan acara khusus dalam Misa dan ibadat khusus, agar persiapan pelayanan terkoordinasi dengan baik.",
-    action: "Buka layanan surat",
-    href: links.khusus,
-    accent: "coral",
+    label: "Bidang 5 · Administrasi dan komunikasi", columns: "service-grid-four",
+    services: [
+      { number: "05", icon: ClipboardList, title: "Notulensi & Desain Visual", accent: "blue", text: "Mendokumentasikan hasil rapat dan menyiapkan materi visual untuk kebutuhan Seksi Liturgi." },
+      { number: "06", icon: WalletCards, title: "Input Anggaran SAPA", accent: "violet", text: "Menghimpun dan memasukkan kebutuhan anggaran pelayanan liturgi ke SAPA." },
+      { number: "07", icon: FileCheck2, title: "Proposal & LPJ", accent: "coral", text: "Menyiapkan proposal kegiatan dan laporan pertanggungjawaban agar rencana serta hasilnya terdokumentasi." },
+      { number: "08", icon: MessagesSquare, title: "Komunikasi SLL", accent: "blue", text: "Menjaga komunikasi Seksi Liturgi dengan pelayanan liturgi di lingkungan." },
+    ],
+  },
+  {
+    label: "Bidang 6 · Perlengkapan liturgi", columns: "service-grid-two",
+    services: [
+      { number: "09", icon: Boxes, title: "Inventaris", accent: "violet", text: "Mendata dan memantau perlengkapan serta benda yang digunakan dalam pelayanan liturgi." },
+      { number: "10", icon: PackagePlus, title: "Pengadaan Barang", accent: "coral", text: "Mengkoordinasikan kebutuhan dan pengadaan perlengkapan untuk pelayanan liturgi." },
+    ],
   },
 ];
 
@@ -187,6 +210,33 @@ function ExternalLink({
     >
       {children}
     </a>
+  );
+}
+
+function ServiceCard({ service }: { service: Service }) {
+  const Icon = service.icon;
+  const content = (
+    <>
+      <div className="service-card-top">
+        <span className="service-icon"><Icon size={25} strokeWidth={1.8} aria-hidden="true" /></span>
+        <span className="service-number">{service.number} / 10</span>
+      </div>
+      <h4>{service.title}</h4>
+      <p className="service-description">{service.text}</p>
+      {service.tags && (
+        <ul className="service-tags" aria-label="Subseksi yang didampingi">
+          {service.tags.map((tag) => <li key={tag}>{tag}</li>)}
+        </ul>
+      )}
+      {service.action && <span className="service-action">{service.action} <ArrowUpRight size={19} aria-hidden="true" /></span>}
+    </>
+  );
+  const className = `service-card accent-${service.accent}${service.href ? " service-card-linked" : ""}`;
+
+  return service.href ? (
+    <ExternalLink href={service.href} className={className}>{content}</ExternalLink>
+  ) : (
+    <article className={className}>{content}</article>
   );
 }
 
@@ -424,25 +474,17 @@ export default function Home() {
           <div className="section-intro section-intro-light">
             <span className="section-kicker">02 / PILAR LAYANAN</span>
             <h2 className="section-heading">Cari yang kamu butuhkan.<br /><em>Siap melayani.</em></h2>
-            <p>Tiga ruang sumber daya untuk mempersiapkan pelayanan dengan jelas, serasi, dan penuh penghayatan.</p>
+            <p>Sepuluh bentuk pelayanan yang saling melengkapi, dari pendampingan petugas hingga perlengkapan perayaan.</p>
           </div>
-          <div className="mt-12 grid gap-5 lg:grid-cols-3">
-            {services.map((service) => {
-              const Icon = service.icon;
-              return (
-                <ExternalLink key={service.title} href={service.href} className={`service-card accent-${service.accent}`}>
-                  <div className="flex items-start justify-between">
-                    <span className="service-icon"><Icon size={26} strokeWidth={1.8} aria-hidden="true" /></span>
-                    <span className="team-number">{service.number} / 03</span>
-                  </div>
-                  <h3 className="mt-9 font-serif text-[2rem] font-semibold leading-tight">{service.title}</h3>
-                  <p className="mt-4 leading-7 text-[#555b7a]">{service.text}</p>
-                  <span className="service-action">
-                    {service.action} <ArrowUpRight size={19} aria-hidden="true" />
-                  </span>
-                </ExternalLink>
-              );
-            })}
+          <div className="service-groups">
+            {serviceGroups.map((group) => (
+              <div className="service-group" key={group.label}>
+                <h3>{group.label}</h3>
+                <div className={`service-grid ${group.columns}`}>
+                  {group.services.map((service) => <ServiceCard key={service.number} service={service} />)}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
