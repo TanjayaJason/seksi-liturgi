@@ -145,13 +145,13 @@ export default function Home() {
           <a
             href="#beranda"
             className="flex shrink-0 items-center gap-3"
-            aria-label="TLPI Bidang 4, kembali ke beranda"
+            aria-label="Seksi Liturgi, kembali ke beranda"
           >
             <BrandLogos />
             <span className="leading-tight">
-              <span className="block text-base font-extrabold tracking-tight">TLPI Bidang 4</span>
+              <span className="block text-base font-extrabold tracking-tight">Seksi Liturgi</span>
               <span className="block text-[11px] font-bold uppercase tracking-[0.15em] text-[#bac5ff]">
-                Seksi Liturgi
+                Paroki Mangga Besar
               </span>
             </span>
           </a>
@@ -251,7 +251,7 @@ export default function Home() {
             <span className="section-kicker">01 / TENTANG KAMI</span>
             <h2 className="section-heading">Wajah di balik <em>pelayanan.</em></h2>
             <p>
-              Bidang 4 menyiapkan pelayanan liturgi bersama. Satu koordinasi,
+              Seksi Liturgi menyiapkan pelayanan liturgi bersama. Satu koordinasi,
               tiga subdivisi yang berjalan setara dalam merawat perayaan iman.
             </p>
           </div>
@@ -369,7 +369,7 @@ export default function Home() {
       <footer className="footer">
         <div className="page-shell grid gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_.8fr_1fr]">
           <div>
-            <div className="flex items-center gap-4"><BrandLogos large /><div><p className="text-base font-extrabold">TLPI Bidang 4</p><p className="text-xs font-bold uppercase tracking-[.15em] text-[#b8c2ff]">Tata Laksana Perayaan dan Ibadat</p></div></div>
+            <div className="flex items-center gap-4"><BrandLogos large /><div><p className="text-base font-extrabold">Seksi Liturgi</p><p className="text-xs font-bold uppercase tracking-[.15em] text-[#b8c2ff]">Paroki Mangga Besar</p></div></div>
             <p className="mt-6 max-w-sm text-sm leading-7 text-[#c3c9e4]">
               Melayani bersama agar perayaan liturgi menjadi ruang perjumpaan yang benar, indah, hidup dan memerdekakan.
             </p>
@@ -395,7 +395,7 @@ export default function Home() {
           </div>
         </div>
         <div className="page-shell mt-12 flex flex-col gap-3 border-t border-white/15 pt-6 text-xs text-[#9da6d0] sm:flex-row sm:justify-between">
-          <p>© 2026 TLPI Bidang 4. Seluruh hak cipta dilindungi.</p>
+          <p>© 2026 Seksi Liturgi Paroki Mangga Besar. Seluruh hak cipta dilindungi.</p>
           <p>Ad Maiorem Dei Gloriam</p>
         </div>
       </footer>

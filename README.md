@@ -1,8 +1,8 @@
-# TLPI Bidang 4
+# Seksi Liturgi Paroki Mangga Besar
 
-Situs informasi Seksi Liturgi Bidang 4 Tata Laksana Perayaan dan Ibadat, Gereja St. Petrus & Paulus, Paroki Mangga Besar. Situs ini memperkenalkan tim pelayanan dan menyediakan akses ke sumber daya liturgi, jadwal petugas, serta kalender liturgi.
+Situs informasi Seksi Liturgi Gereja St. Petrus & Paulus, Paroki Mangga Besar. Situs ini memperkenalkan tim pelayanan dan menyediakan akses ke sumber daya liturgi, jadwal petugas, serta kalender liturgi.
 
-Situs aktif: [tlpi-bidang-4.tanjaya-winata.chatgpt.site](https://tlpi-bidang-4.tanjaya-winata.chatgpt.site/)
+Alamat situs aktif akan diperbarui setelah nama proyek dan domain deployment disesuaikan.
 
 ## Isi situs
 
@@ -37,4 +37,4 @@ Saat ini halaman tidak memerlukan variabel lingkungan atau basis data. Tautan ke
 
 ## Publikasi
 
-Sumber proyek ada di [GitHub](https://github.com/TanjayaJason/tlpi). Situs aktif diterbitkan melalui Sites dengan konfigurasi [`.openai/hosting.json`](.openai/hosting.json).
+Sumber proyek ada di [GitHub](https://github.com/TanjayaJason/seksi-liturgi). Situs aktif diterbitkan melalui layanan deployment yang terhubung ke repositori ini.

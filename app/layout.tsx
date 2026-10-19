@@ -5,6 +5,6 @@ import "./globals.css";
 const manrope = Manrope({ subsets:["latin"], variable:"--font-manrope", display:"swap" });
 const cormorant = Cormorant_Garamond({ subsets:["latin"], variable:"--font-cormorant", display:"swap", weight:["400","500","600","700"] });
 
-export const metadata:Metadata = { title:"TLPI Bidang 4 | Tata Laksana Perayaan dan Ibadat", description:"Pusat informasi dan manajemen pelayanan liturgi Seksi Liturgi Bidang 4 TLPI.", icons:{ icon:"/favicon.ico", shortcut:"/favicon.ico" } };
+export const metadata:Metadata = { title:"Seksi Liturgi | Paroki Mangga Besar", description:"Pusat informasi dan manajemen pelayanan Seksi Liturgi Gereja St. Petrus & Paulus, Paroki Mangga Besar.", icons:{ icon:"/favicon.ico", shortcut:"/favicon.ico" } };
 
 export default function RootLayout({ children }:Readonly<{ children:React.ReactNode }>) { return <html lang="id"><body className={`${manrope.variable} ${cormorant.variable} antialiased`}>{children}</body></html>; }
