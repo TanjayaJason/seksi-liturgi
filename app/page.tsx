@@ -746,8 +746,7 @@ export default function Home() {
             <span className="section-kicker">04 / KALENDER LITURGI</span>
             <h2 className="section-heading mt-5">Perayaan<br /><em>yang akan datang.</em></h2>
             <p className="mt-5 max-w-lg text-base leading-8 text-[#626784]">
-              Lima agenda terdekat dari kalender liturgi paroki, diperbarui otomatis
-              berdasarkan Google Sheet.
+              Lima agenda terdekat dari kalender liturgi paroki.
             </p>
             <div className="mt-7 flex items-center gap-3 text-sm font-semibold text-[#705f9d]">
               <CalendarDays size={18} aria-hidden="true" />
@@ -762,7 +761,7 @@ export default function Home() {
                 </div>
               ))}
               {calendarStatus === "ready" && upcomingEvents.map((event, index) => (
-                <article className="upcoming-event" key={`${event.startDate}-${event.title}`} data-reveal="card">
+                <article className="upcoming-event" key={`${event.startDate}-${event.title}`}>
                   <span className="upcoming-event-number">{String(index + 1).padStart(2, "0")}</span>
                   <div>
                     <p className="upcoming-event-date">{formatEventDay(event)} · {formatEventDate(event)}</p>
