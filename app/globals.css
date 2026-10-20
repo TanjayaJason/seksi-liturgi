@@ -391,7 +391,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
 
 .services-section {
   position: relative;
-  background: rgb(32 37 65 / .94);
+  background: rgb(32 37 65 / .82);
   background-image: repeating-linear-gradient(to bottom, transparent 0 13px, rgb(233 199 120 / .055) 13px 14px, transparent 14px 20px);
   background-size: 100% 160px;
 }
@@ -462,7 +462,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   overflow: hidden;
   border: 1px solid rgb(112 95 157 / .25);
   border-radius: 25px;
-  background: rgb(255 255 255 / .88);
+  background: rgb(255 255 255 / .72);
   padding: 1.5rem;
   color: #20244e;
   text-align: left;
@@ -474,25 +474,25 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   position: absolute;
   inset: 0;
   background-image: url("/saints-liturgi.jpeg");
-  background-position: var(--saint-focus) center;
+  background-position: var(--saint-focus) 43%;
   background-size: var(--saint-size);
   background-repeat: no-repeat;
 }
 .subsection-card-image {
-  opacity: .18;
-  filter: saturate(.78) brightness(1.13);
+  opacity: .48;
+  filter: saturate(.88) brightness(1.02) contrast(1.08);
   transition: opacity .3s ease, transform .55s cubic-bezier(.2,.8,.2,1);
 }
 .subsection-card::after {
   position: absolute;
   inset: 0;
-  background: linear-gradient(130deg, rgb(255 255 255 / .95) 10%, rgb(255 255 255 / .73) 52%, rgb(255 255 255 / .44));
+  background: linear-gradient(120deg, rgb(255 255 255 / .86) 7%, rgb(255 255 255 / .58) 54%, rgb(255 255 255 / .2));
   content: "";
   pointer-events: none;
 }
 .subsection-card > :not(.subsection-card-image) { position: relative; z-index: 1; }
 .subsection-card:hover { transform: translateY(-6px); border-color: #8b70ae; box-shadow: 0 24px 54px rgb(30 38 105 / .16); }
-.subsection-card:hover .subsection-card-image { opacity: .28; transform: scale(1.035); }
+.subsection-card:hover .subsection-card-image { opacity: .62; transform: scale(1.035); }
 .subsection-number { color: #705f9d; font-size: .68rem; font-weight: 850; letter-spacing: .15em; }
 .subsection-name { margin-top: 3.4rem; font-family: var(--font-cormorant), Georgia, serif; font-size: clamp(2rem, 3vw, 2.55rem); font-weight: 700; line-height: .98; }
 .subsection-patron { margin-top: .8rem; color: #775b36; font-size: .8rem; font-weight: 800; line-height: 1.45; }
@@ -513,11 +513,11 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
 }
 .subsection-dialog::backdrop { background: rgb(12 16 39 / .72); backdrop-filter: blur(5px); }
 .subsection-dialog-content { position: relative; min-height: 520px; overflow: hidden; background: #f7f1e8; }
-.subsection-dialog-image { opacity: .36; filter: saturate(.78) brightness(1.12); }
+.subsection-dialog-image { opacity: .62; filter: saturate(.88) brightness(1.02) contrast(1.1); }
 .subsection-dialog-content::after {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgb(247 241 232 / .98) 5%, rgb(247 241 232 / .86) 52%, rgb(247 241 232 / .32));
+  background: linear-gradient(90deg, rgb(247 241 232 / .94) 4%, rgb(247 241 232 / .72) 49%, rgb(247 241 232 / .12));
   content: "";
 }
 .subsection-dialog-copy { position: relative; z-index: 1; display: flex; min-height: 520px; flex-direction: column; justify-content: center; padding: clamp(1.6rem, 5vw, 4rem); }
@@ -568,7 +568,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   .subsection-grid { grid-template-columns: 1fr; }
   .subsection-card { min-height: 250px; }
   .subsection-dialog-copy { min-height: 500px; justify-content: flex-end; padding-top: 6rem; }
-  .subsection-dialog-content::after { background: linear-gradient(180deg, rgb(247 241 232 / .45), rgb(247 241 232 / .96) 46%, rgb(247 241 232 / 1)); }
+  .subsection-dialog-content::after { background: linear-gradient(180deg, rgb(247 241 232 / .12), rgb(247 241 232 / .8) 43%, rgb(247 241 232 / .96)); }
 }
 @media (max-width: 420px) { .division-grid { grid-template-columns: 1fr; } .division-summary { min-height: 140px; } }
 @media (prefers-reduced-motion: no-preference) {

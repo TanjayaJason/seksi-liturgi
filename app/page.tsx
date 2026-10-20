@@ -60,15 +60,15 @@ type Subsection = {
 };
 
 const subsections: Subsection[] = [
-  { number: "01", name: "Putra Altar", patron: "St. Tarsisius", focus: "4%" },
-  { number: "02", name: "Putri Sakristi", patron: "St. Jeanne d’Arc", focus: "16%" },
-  { number: "03", name: "Caeremoniarius", patron: "St. Yohanes Berchmans", focus: "27%" },
-  { number: "04", name: "Lektor", patron: "St. Hieronimus", focus: "38%" },
+  { number: "01", name: "Putra Altar", patron: "St. Tarsisius", focus: "-2%" },
+  { number: "02", name: "Putri Sakristi", patron: "St. Jeanne d’Arc", focus: "10%" },
+  { number: "03", name: "Caeremoniarius", patron: "St. Yohanes Berchmans", focus: "23%" },
+  { number: "04", name: "Lektor", patron: "St. Hieronimus", focus: "36%" },
   { number: "05", name: "Pemazmur", patron: "St. Cicilia", focus: "49%" },
-  { number: "06", name: "Pasdior", patron: "St. Romanus", focus: "60%" },
-  { number: "07", name: "Kolatan", patron: "St. Zita", focus: "69%" },
-  { number: "08", name: "Prodiakon", patron: "St. Petrus dan St. Paulus", focus: "83%", size: "520% auto" },
-  { number: "09", name: "Dekorasi Altar", patron: "Santa pelindung akan ditentukan", focus: "96%" },
+  { number: "06", name: "Pasdior", patron: "St. Romanus", focus: "61%" },
+  { number: "07", name: "Kolatan", patron: "St. Zita", focus: "72%" },
+  { number: "08", name: "Prodiakon", patron: "St. Petrus dan St. Paulus", focus: "90%", size: "520% auto" },
+  { number: "09", name: "Dekorasi Altar", patron: "Santa pelindung akan ditentukan", focus: "103%" },
 ];
 
 type Person = { name: string; region: string };
@@ -631,7 +631,7 @@ export default function Home() {
                 type="button"
                 className="subsection-card"
                 data-reveal="card"
-                style={{ "--saint-focus": subsection.focus, "--saint-size": subsection.size ?? "950% auto" } as React.CSSProperties}
+                style={{ "--saint-focus": subsection.focus, "--saint-size": subsection.size ?? "650% auto" } as React.CSSProperties}
                 onClick={() => setActiveSubsection(subsection)}
                 aria-label={`Baca pengantar Subseksi ${subsection.name}, pelindung ${subsection.patron}`}
               >
@@ -656,7 +656,7 @@ export default function Home() {
         {activeSubsection && (
           <div
             className="subsection-dialog-content"
-            style={{ "--saint-focus": activeSubsection.focus, "--saint-size": activeSubsection.size ?? "950% auto" } as React.CSSProperties}
+            style={{ "--saint-focus": activeSubsection.focus, "--saint-size": activeSubsection.size ?? "650% auto" } as React.CSSProperties}
           >
             <span className="subsection-dialog-image" aria-hidden="true" />
             <div className="subsection-dialog-copy">
