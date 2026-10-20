@@ -59,6 +59,48 @@ type Subsection = {
   size?: string;
 };
 
+type UpcomingEvent = {
+  dayLabel: string;
+  title: string;
+  startDate: string;
+  endDate: string;
+};
+
+const eventDateFormatter = new Intl.DateTimeFormat("id-ID", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+const eventDayFormatter = new Intl.DateTimeFormat("id-ID", {
+  weekday: "long",
+  timeZone: "UTC",
+});
+
+function eventDate(value: string) {
+  return new Date(`${value}T00:00:00Z`);
+}
+
+function formatEventDate(event: UpcomingEvent) {
+  const start = eventDate(event.startDate);
+  const end = eventDate(event.endDate);
+  if (event.startDate === event.endDate) return eventDateFormatter.format(start);
+  const startParts = event.startDate.split("-");
+  const endParts = event.endDate.split("-");
+  if (startParts[0] === endParts[0] && startParts[1] === endParts[1]) {
+    return `${startParts[2]}–${eventDateFormatter.format(end)}`;
+  }
+  return `${eventDateFormatter.format(start)} – ${eventDateFormatter.format(end)}`;
+}
+
+function formatEventDay(event: UpcomingEvent) {
+  if (event.dayLabel) return event.dayLabel;
+  const start = eventDayFormatter.format(eventDate(event.startDate));
+  if (event.startDate === event.endDate) return start;
+  return `${start}–${eventDayFormatter.format(eventDate(event.endDate))}`;
+}
+
 const subsections: Subsection[] = [
   { number: "01", name: "Putra Altar", patron: "St. Tarsisius", focus: "0%" },
   { number: "02", name: "Putri Sakristi", patron: "St. Jeanne d’Arc", focus: "9%" },
@@ -296,6 +338,8 @@ export default function Home() {
   const [splashState, setSplashState] = useState<"visible" | "leaving" | "hidden">("visible");
   const [activeDivision, setActiveDivision] = useState<(typeof divisions)[number] | null>(null);
   const [activeSubsection, setActiveSubsection] = useState<Subsection | null>(null);
+  const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([]);
+  const [calendarStatus, setCalendarStatus] = useState<"loading" | "ready" | "error">("loading");
   const divisionDialog = useRef<HTMLDialogElement>(null);
   const subsectionDialog = useRef<HTMLDialogElement>(null);
   const page = useRef<HTMLElement>(null);
@@ -374,6 +418,24 @@ export default function Home() {
   useEffect(() => {
     if (activeSubsection && !subsectionDialog.current?.open) subsectionDialog.current?.showModal();
   }, [activeSubsection]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/upcoming-events", { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error("Kalender tidak dapat dibaca");
+        return response.json() as Promise<{ events: UpcomingEvent[] }>;
+      })
+      .then(({ events }) => {
+        setUpcomingEvents(events);
+        setCalendarStatus("ready");
+      })
+      .catch((error) => {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        setCalendarStatus("error");
+      });
+    return () => controller.abort();
+  }, []);
 
   return (
     <main ref={page} className="site-page min-h-screen overflow-x-hidden text-[#1c2146]">
@@ -679,36 +741,50 @@ export default function Home() {
       </dialog>
 
       <section id="kalender" className="section-space calendar-section scroll-mt-20">
-        <div className="page-shell grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-16">
+        <div className="page-shell grid gap-10 lg:grid-cols-[.72fr_1.28fr] lg:items-start lg:gap-16">
           <div data-reveal="section">
             <span className="section-kicker">04 / KALENDER LITURGI</span>
-            <h2 className="section-heading mt-5">Menjalani tahun<br /><em>bersama Gereja.</em></h2>
+            <h2 className="section-heading mt-5">Perayaan<br /><em>yang akan datang.</em></h2>
             <p className="mt-5 max-w-lg text-base leading-8 text-[#626784]">
-              Lihat penanggalan liturgi sebagai acuan menyiapkan nyanyian, bacaan,
-              warna liturgi, dan pelayanan setiap perayaan.
+              Lima agenda terdekat dari kalender liturgi paroki, diperbarui otomatis
+              berdasarkan Google Sheet.
             </p>
-            <div className="mt-7 flex items-center gap-3 text-sm font-semibold text-[#4f5bc6]">
+            <div className="mt-7 flex items-center gap-3 text-sm font-semibold text-[#705f9d]">
               <CalendarDays size={18} aria-hidden="true" />
-              Pilih tahun untuk membuka kalender
+              Agenda yang sudah lewat otomatis disembunyikan
             </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {[
-              { year: "2026", href: links.calendar2026, index: "01" },
-              { year: "2027", href: links.calendar2027, index: "02" },
-            ].map((item) => (
-              <ExternalLink key={item.year} href={item.href} className="calendar-card group" reveal>
-                <span className="flex items-center justify-between text-sm font-bold text-[#676e98]">
-                  KALENDER LITURGI <span>{item.index} / 02</span>
-                </span>
-                <span className="mt-12 block font-serif text-[clamp(4rem,9vw,6.5rem)] font-semibold leading-none tracking-tight">
-                  {item.year}
-                </span>
-                <span className="mt-8 flex items-center justify-between border-t border-[#1c2146]/15 pt-5 text-sm font-bold">
-                  Buka kalender <ArrowUpRight size={20} className="transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" aria-hidden="true" />
-                </span>
+          <div>
+            <div className="upcoming-events" aria-live="polite">
+              {calendarStatus === "loading" && Array.from({ length: 5 }, (_, index) => (
+                <div className="upcoming-event upcoming-event-loading" key={index} aria-hidden="true">
+                  <span /><span />
+                </div>
+              ))}
+              {calendarStatus === "ready" && upcomingEvents.map((event, index) => (
+                <article className="upcoming-event" key={`${event.startDate}-${event.title}`} data-reveal="card">
+                  <span className="upcoming-event-number">{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <p className="upcoming-event-date">{formatEventDay(event)} · {formatEventDate(event)}</p>
+                    <h3>{event.title}</h3>
+                  </div>
+                </article>
+              ))}
+              {calendarStatus === "ready" && upcomingEvents.length === 0 && (
+                <div className="calendar-fallback">Belum ada agenda mendatang yang tercatat.</div>
+              )}
+              {calendarStatus === "error" && (
+                <div className="calendar-fallback">Agenda belum dapat dimuat. Kalender lengkap tetap dapat dibuka melalui tombol di bawah.</div>
+              )}
+            </div>
+            <div className="calendar-links">
+              <ExternalLink href={links.calendar2026} className="calendar-link-button">
+                Kalender 2026 <ArrowUpRight size={17} aria-hidden="true" />
               </ExternalLink>
-            ))}
+              <ExternalLink href={links.calendar2027} className="calendar-link-button">
+                Kalender 2027 <ArrowUpRight size={17} aria-hidden="true" />
+              </ExternalLink>
+            </div>
           </div>
         </div>
       </section>

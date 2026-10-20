@@ -527,22 +527,33 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
 .subsection-dialog-intro { max-width: 560px; margin-top: 1.5rem; color: #4f5572; font-size: 1rem; line-height: 1.9; }
 
 .calendar-section { background: rgb(243 239 233 / .88); }
-.calendar-card {
-  display: flex;
-  min-height: 270px;
-  flex-direction: column;
-  border: 1px solid #ddd4c8;
-  border-radius: 26px;
-  background: #fff;
-  padding: 1.7rem;
-  color: #252960;
-  box-shadow: 0 16px 45px rgb(42 47 135 / .055);
-  transition: transform .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+.upcoming-events { display: grid; gap: .75rem; }
+.upcoming-event {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  min-height: 104px;
+  border: 1px solid rgb(112 95 157 / .22);
+  border-radius: 21px;
+  background: rgb(255 255 255 / .8);
+  padding: 1.2rem 1.35rem;
+  box-shadow: 0 12px 32px rgb(42 47 135 / .055);
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
 }
-.calendar-card:nth-child(2) { background: #ede6f3; }
-.calendar-card:hover { transform: translateY(-5px); border-color: #c9aa6f; background: #f8f1e2; box-shadow: 0 22px 50px rgb(42 47 135 / .13); }
-.calendar-card:active { transform: translateY(-1px) scale(.985); }
-.calendar-card > span:last-child { margin-top: auto; }
+.upcoming-event:hover { transform: translateX(5px); border-color: #a68bbf; box-shadow: 0 16px 38px rgb(42 47 135 / .11); }
+.upcoming-event-number { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 13px; background: #eee8f6; color: #705f9d; font-size: .68rem; font-weight: 850; letter-spacing: .12em; }
+.upcoming-event-date { color: #8c6a30; font-size: .7rem; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
+.upcoming-event h3 { margin-top: .35rem; font-family: var(--font-cormorant), Georgia, serif; font-size: clamp(1.4rem, 2.2vw, 1.8rem); font-weight: 700; line-height: 1.05; }
+.upcoming-event-loading { overflow: hidden; }
+.upcoming-event-loading span { height: 16px; border-radius: 999px; background: linear-gradient(90deg, #ebe6df 25%, #f8f5f0 50%, #ebe6df 75%); background-size: 200% 100%; animation: calendarLoading 1.4s linear infinite; }
+.upcoming-event-loading span:first-child { width: 42px; height: 42px; border-radius: 13px; }
+.upcoming-event-loading span:last-child { width: min(78%, 420px); }
+@keyframes calendarLoading { to { background-position: -200% 0; } }
+.calendar-fallback { border: 1px dashed #b9abc8; border-radius: 21px; background: rgb(255 255 255 / .62); padding: 1.4rem; color: #626784; line-height: 1.7; }
+.calendar-links { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.1rem; }
+.calendar-link-button { display: inline-flex; align-items: center; gap: .55rem; border: 1px solid #c9bdd5; border-radius: 13px; background: rgb(255 255 255 / .68); padding: .72rem .9rem; color: #5f4d84; font-size: .78rem; font-weight: 850; transition: transform .2s ease, background-color .2s ease, border-color .2s ease; }
+.calendar-link-button:hover { transform: translateY(-2px); border-color: #8c72a8; background: #fff; }
 
 .footer { border-top: 1px solid rgb(255 255 255 / .12); background: rgb(18 23 44 / .96); padding-block: 4rem 2rem; color: #fff; }
 .footer-heading { color: #f0d38f; font-size: .75rem; font-weight: 850; letter-spacing: .17em; text-transform: uppercase; }
@@ -597,6 +608,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
   .splash-screen.is-leaving { visibility: hidden; animation: none !important; }
   .motion-ready [data-reveal] { opacity: 0; transition: opacity .28s ease !important; }
   .motion-ready [data-reveal].is-visible { opacity: 1; }
-  .division-summary:hover, .division-summary:active, .division-summary:hover .division-summary-action svg, .service-card:hover, .service-card:active, .service-card:hover .service-icon, .subsection-card:hover, .subsection-card:hover .subsection-card-image, .calendar-card:hover, .calendar-card:active, .button:hover, .button:active, .verse-wrap:hover .hero-art-image { transform: none !important; }
+  .division-summary:hover, .division-summary:active, .division-summary:hover .division-summary-action svg, .service-card:hover, .service-card:active, .service-card:hover .service-icon, .subsection-card:hover, .subsection-card:hover .subsection-card-image, .upcoming-event:hover, .calendar-link-button:hover, .button:hover, .button:active, .verse-wrap:hover .hero-art-image { transform: none !important; }
   .division-summary::after { display: none; }
 }
