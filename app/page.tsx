@@ -379,7 +379,12 @@ export default function Home() {
     <main ref={page} className="site-page min-h-screen overflow-x-hidden text-[#1c2146]">
       <div className="site-backdrop" aria-hidden="true" />
       {splashState !== "hidden" && (
-        <div className={`splash-screen${splashState === "leaving" ? " is-leaving" : ""}`} role="status" aria-label="Memuat Seksi Liturgi Paroki Mangga Besar">
+        <div
+          className={`splash-screen${splashState === "leaving" ? " is-leaving" : ""}`}
+          style={{ "--splash-hold": `${SPLASH_HOLD_MS}ms`, "--splash-fade": `${SPLASH_FADE_MS}ms` } as React.CSSProperties}
+          role="status"
+          aria-label="Memuat Seksi Liturgi Paroki Mangga Besar"
+        >
           <div className="splash-content">
             <div className="splash-logos">
               <img src="/logo-paroki-mangga-besar.png" alt="Logo Paroki Mangga Besar" width={468} height={442} />
