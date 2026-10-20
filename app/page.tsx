@@ -37,11 +37,38 @@ const links = {
     "https://docs.google.com/spreadsheets/d/1hGakUMf1Be8ViLWT9PzcD3JgJGh5XWGy/edit?usp=sharing&ouid=111785717314206636419&rtpof=true&sd=true",
 };
 
+// Ubah dua angka ini untuk mengatur durasi splash secara manual.
+// SPLASH_HOLD_MS = waktu logo diam sebelum memudar.
+// SPLASH_FADE_MS = lama transisi memudar.
+const SPLASH_HOLD_MS = 2400;
+const SPLASH_FADE_MS = 600;
+
 const navItems = [
   { label: "Beranda", href: "#beranda" },
   { label: "Tentang Kami", href: "#tentang" },
   { label: "Pilar Layanan", href: "#layanan" },
+  { label: "9 Subseksi", href: "#subseksi" },
   { label: "Kalender Liturgi", href: "#kalender" },
+];
+
+type Subsection = {
+  number: string;
+  name: string;
+  patron: string;
+  focus: string;
+  size?: string;
+};
+
+const subsections: Subsection[] = [
+  { number: "01", name: "Putra Altar", patron: "St. Tarsisius", focus: "4%" },
+  { number: "02", name: "Putri Sakristi", patron: "St. Jeanne d’Arc", focus: "16%" },
+  { number: "03", name: "Caeremoniarius", patron: "St. Yohanes Berchmans", focus: "27%" },
+  { number: "04", name: "Lektor", patron: "St. Hieronimus", focus: "38%" },
+  { number: "05", name: "Pemazmur", patron: "St. Cicilia", focus: "49%" },
+  { number: "06", name: "Pasdior", patron: "St. Romanus", focus: "60%" },
+  { number: "07", name: "Kolatan", patron: "St. Zita", focus: "69%" },
+  { number: "08", name: "Prodiakon", patron: "St. Petrus dan St. Paulus", focus: "83%", size: "520% auto" },
+  { number: "09", name: "Dekorasi Altar", patron: "Santa pelindung akan ditentukan", focus: "96%" },
 ];
 
 type Person = { name: string; region: string };
@@ -268,7 +295,9 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [splashState, setSplashState] = useState<"visible" | "leaving" | "hidden">("visible");
   const [activeDivision, setActiveDivision] = useState<(typeof divisions)[number] | null>(null);
+  const [activeSubsection, setActiveSubsection] = useState<Subsection | null>(null);
   const divisionDialog = useRef<HTMLDialogElement>(null);
+  const subsectionDialog = useRef<HTMLDialogElement>(null);
   const page = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -288,8 +317,8 @@ export default function Home() {
     } catch {
       // A storage restriction should not prevent the page from opening.
     }
-    const leaveTimer = window.setTimeout(() => setSplashState("leaving"), 1250);
-    const hideTimer = window.setTimeout(() => setSplashState("hidden"), 1650);
+    const leaveTimer = window.setTimeout(() => setSplashState("leaving"), SPLASH_HOLD_MS);
+    const hideTimer = window.setTimeout(() => setSplashState("hidden"), SPLASH_HOLD_MS + SPLASH_FADE_MS);
     return () => {
       window.clearTimeout(leaveTimer);
       window.clearTimeout(hideTimer);
@@ -342,8 +371,13 @@ export default function Home() {
     if (activeDivision && !divisionDialog.current?.open) divisionDialog.current?.showModal();
   }, [activeDivision]);
 
+  useEffect(() => {
+    if (activeSubsection && !subsectionDialog.current?.open) subsectionDialog.current?.showModal();
+  }, [activeSubsection]);
+
   return (
-    <main ref={page} className="min-h-screen overflow-x-hidden bg-[#faf8f4] text-[#1c2146]">
+    <main ref={page} className="site-page min-h-screen overflow-x-hidden text-[#1c2146]">
+      <div className="site-backdrop" aria-hidden="true" />
       {splashState !== "hidden" && (
         <div className={`splash-screen${splashState === "leaving" ? " is-leaving" : ""}`} role="status" aria-label="Memuat Seksi Liturgi Paroki Mangga Besar">
           <div className="splash-content">
@@ -574,10 +608,75 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="subseksi" className="section-space subsections-section scroll-mt-20">
+        <div className="page-shell">
+          <div className="section-intro" data-reveal="section">
+            <span className="section-kicker">03 / SEMBILAN SUBSEKSI</span>
+            <h2 className="section-heading">Satu panggilan.<br /><em>Sembilan cara melayani.</em></h2>
+            <p>
+              Sembilan subseksi berjalan bersama di bawah naungan Seksi Liturgi. Pilih satu kartu
+              untuk mengenal peran pelayanan dan santo atau santa pelindungnya.
+            </p>
+          </div>
+
+          <div className="subsection-grid">
+            {subsections.map((subsection) => (
+              <button
+                key={subsection.number}
+                type="button"
+                className="subsection-card"
+                data-reveal="card"
+                style={{ "--saint-focus": subsection.focus, "--saint-size": subsection.size ?? "950% auto" } as React.CSSProperties}
+                onClick={() => setActiveSubsection(subsection)}
+                aria-label={`Baca pengantar Subseksi ${subsection.name}, pelindung ${subsection.patron}`}
+              >
+                <span className="subsection-card-image" aria-hidden="true" />
+                <span className="subsection-number">{subsection.number} / 09</span>
+                <span className="subsection-name">Subseksi<br />{subsection.name}</span>
+                <span className="subsection-patron">{subsection.patron}</span>
+                <span className="subsection-action">Baca pengantar <ArrowUpRight size={17} aria-hidden="true" /></span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <dialog
+        ref={subsectionDialog}
+        className="subsection-dialog"
+        aria-labelledby="subsection-dialog-title"
+        onClose={() => setActiveSubsection(null)}
+        onClick={(event) => { if (event.target === event.currentTarget) subsectionDialog.current?.close(); }}
+      >
+        {activeSubsection && (
+          <div
+            className="subsection-dialog-content"
+            style={{ "--saint-focus": activeSubsection.focus, "--saint-size": activeSubsection.size ?? "950% auto" } as React.CSSProperties}
+          >
+            <span className="subsection-dialog-image" aria-hidden="true" />
+            <div className="subsection-dialog-copy">
+              <div className="subsection-dialog-top">
+                <span className="subsection-number">SUBSEKSI {activeSubsection.number} / 09</span>
+                <button type="button" className="division-dialog-close" onClick={() => subsectionDialog.current?.close()} aria-label="Tutup pengantar subseksi">
+                  <X size={20} aria-hidden="true" />
+                </button>
+              </div>
+              <p className="subsection-dialog-patron">Pelindung · {activeSubsection.patron}</p>
+              <h2 id="subsection-dialog-title">Subseksi {activeSubsection.name}</h2>
+              <p className="subsection-dialog-intro">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pelayanan ini bertumbuh
+                dalam semangat kebersamaan, ketekunan, dan kesiapsediaan untuk mendukung setiap
+                perayaan liturgi agar berlangsung dengan khidmat, tertib, dan penuh sukacita.
+              </p>
+            </div>
+          </div>
+        )}
+      </dialog>
+
       <section id="kalender" className="section-space calendar-section scroll-mt-20">
         <div className="page-shell grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-16">
           <div data-reveal="section">
-            <span className="section-kicker">03 / KALENDER LITURGI</span>
+            <span className="section-kicker">04 / KALENDER LITURGI</span>
             <h2 className="section-heading mt-5">Menjalani tahun<br /><em>bersama Gereja.</em></h2>
             <p className="mt-5 max-w-lg text-base leading-8 text-[#626784]">
               Lihat penanggalan liturgi sebagai acuan menyiapkan nyanyian, bacaan,
