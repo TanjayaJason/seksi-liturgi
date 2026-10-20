@@ -116,6 +116,21 @@ const subsections: Subsection[] = [
 type Person = { name: string; region: string };
 type Group = { title: string; people: Person[] };
 
+const regionLabels: Record<string, string> = {
+  "Taman Sari": "Taman Sari - St Theresia",
+  "Kebon Jeruk": "Kebon Jeruk - St Lucia",
+  "Pang. Jayakarta": "Pangeran Jayakarta - St Albertus",
+  "Pangeran Jayakarta": "Pangeran Jayakarta - St Albertus",
+  "Mangga Besar 1": "Mangga Besar 1 - St Kristoforus",
+  "Tangki": "Tangki - St Yohanes",
+  "Mangga Dua-Kota": "Mangga Dua Kota - St Faustina",
+  "Mangga Dua Kota": "Mangga Dua Kota - St Faustina",
+  "Dwiwarna": "Dwiwarna - St Yoseph",
+  "Kartini": "Kartini - St Clara",
+  "Keagungan": "Keagungan - St Paulus",
+  "Ancol": "Ancol - St Gregorius Agung",
+};
+
 const chair: Person = {
   name: "Eugene Sri Mulyani", region: "Ancol",
 };
@@ -174,7 +189,7 @@ const divisions: {
     number: "05", title: "Administrasi dan Komunikasi", shortTitle: "Administrasi & Komunikasi", accent: "blue",
     deputy: { name: "Florentina Aurelia Regina Sabina", region: "Keagungan" },
     groups: [
-      { title: "Staff Notulensi dan Desain Visual", people: [
+      { title: "Staff Desain Visual", people: [
         { name: "Timotius Vincent Halim", region: "Kartini" },
       ] },
       { title: "Staff SAPA", people: [
@@ -196,10 +211,12 @@ const divisions: {
     groups: [
       { title: "Staff Inventaris", people: [
         { name: "Giovana Susanna", region: "Dwiwarna" },
-        { name: "Christian Nathanael Winoto", region: "Mangga Dua-Kota" },
       ] },
       { title: "Staff Pengadaan Barang", people: [
         { name: "Gabriela Jocelyn Nathaniel", region: "Mangga Dua-Kota" },
+      ] },
+      { title: "Staff Busana Liturgi", people: [
+        { name: "Christian Nathanael Winoto", region: "Mangga Dua-Kota" },
       ] },
     ],
   },
@@ -208,7 +225,7 @@ const divisions: {
 function PersonDetails({ person }: { person: Person }) {
   return (
     <p className="person-details">
-      <span>Wilayah {person.region}</span>
+      <span>Wilayah {regionLabels[person.region] ?? person.region}</span>
     </p>
   );
 }
@@ -244,17 +261,18 @@ const serviceGroups: { label: string; columns: string; services: Service[] }[] =
   {
     label: "Bidang 5 · Administrasi dan komunikasi", columns: "service-grid-four",
     services: [
-      { number: "05", icon: ClipboardList, title: "Notulensi & Desain Visual", accent: "blue", text: "Mendokumentasikan hasil rapat dan menyiapkan materi visual untuk kebutuhan Seksi Liturgi." },
+      { number: "05", icon: ClipboardList, title: "Desain Visual", accent: "blue", text: "Menyiapkan materi visual untuk kebutuhan komunikasi dan pelayanan Seksi Liturgi." },
       { number: "06", icon: WalletCards, title: "Input Anggaran SAPA", accent: "violet", text: "Menghimpun dan memasukkan kebutuhan anggaran pelayanan liturgi ke SAPA." },
       { number: "07", icon: FileCheck2, title: "Proposal & LPJ", accent: "coral", text: "Menyiapkan proposal kegiatan dan laporan pertanggungjawaban agar rencana serta hasilnya terdokumentasi." },
       { number: "08", icon: MessagesSquare, title: "Komunikasi SLL", accent: "blue", text: "Menjaga komunikasi Seksi Liturgi dengan pelayanan liturgi di lingkungan." },
     ],
   },
   {
-    label: "Bidang 6 · Perlengkapan liturgi", columns: "service-grid-two",
+    label: "Bidang 6 · Perlengkapan liturgi", columns: "service-grid-three",
     services: [
       { number: "09", icon: Boxes, title: "Inventaris", accent: "violet", text: "Mendata dan memantau perlengkapan serta benda yang digunakan dalam pelayanan liturgi." },
       { number: "10", icon: PackagePlus, title: "Pengadaan Barang", accent: "coral", text: "Mengkoordinasikan kebutuhan dan pengadaan perlengkapan untuk pelayanan liturgi." },
+      { number: "11", icon: Sparkles, title: "Busana Liturgi", accent: "blue", text: "Mengelola dan menyiapkan busana liturgi agar layak, rapi, dan siap digunakan dalam pelayanan." },
     ],
   },
 ];
@@ -289,7 +307,7 @@ function ServiceCard({ service }: { service: Service }) {
     <>
       <div className="service-card-top">
         <span className="service-icon"><Icon size={25} strokeWidth={1.8} aria-hidden="true" /></span>
-        <span className="service-number">{service.number} / 10</span>
+        <span className="service-number">{service.number} / 11</span>
       </div>
       <h4>{service.title}</h4>
       <p className="service-description">{service.text}</p>
@@ -660,7 +678,7 @@ export default function Home() {
           <div className="section-intro section-intro-light" data-reveal="section">
             <span className="section-kicker">02 / PILAR LAYANAN</span>
             <h2 className="section-heading">Cari yang kamu butuhkan.<br /><em>Siap melayani.</em></h2>
-            <p>Sepuluh bentuk pelayanan yang saling melengkapi, dari pendampingan petugas hingga perlengkapan perayaan.</p>
+            <p>Sebelas bentuk pelayanan yang saling melengkapi, dari pendampingan petugas hingga perlengkapan perayaan.</p>
           </div>
           <div className="service-groups">
             {serviceGroups.map((group) => (
