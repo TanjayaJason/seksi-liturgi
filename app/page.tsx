@@ -55,6 +55,7 @@ type Subsection = {
   number: string;
   name: string;
   patron: string;
+  intro: string;
   focus: string;
   size?: string;
 };
@@ -102,15 +103,42 @@ function formatEventDay(event: UpcomingEvent) {
 }
 
 const subsections: Subsection[] = [
-  { number: "01", name: "Putra Altar", patron: "St. Tarsisius", focus: "0%" },
-  { number: "02", name: "Putri Sakristi", patron: "St. Jeanne d’Arc", focus: "9%" },
-  { number: "03", name: "Caeremoniarius", patron: "St. Yohanes Berchmans", focus: "22%" },
-  { number: "04", name: "Lektor", patron: "St. Hieronimus", focus: "36%" },
-  { number: "05", name: "Pemazmur", patron: "St. Cicilia", focus: "49%" },
-  { number: "06", name: "Pasdior", patron: "St. Romanus", focus: "61%" },
-  { number: "07", name: "Kolatan", patron: "St. Zita", focus: "72%" },
-  { number: "08", name: "Prodiakon", patron: "St. Petrus dan St. Paulus", focus: "90%", size: "520% auto" },
-  { number: "09", name: "Dekorasi Altar", patron: "Santa pelindung akan ditentukan", focus: "100%" },
+  {
+    number: "01", name: "Putra Altar", patron: "St. Tarsisius", focus: "0%",
+    intro: "Putra Altar mendampingi imam dan membantu pelayanan di altar agar Ekaristi serta ibadat lainnya berlangsung lancar, tertib, dan kudus. Dari St. Tarsisius, martir muda yang menjaga Ekaristi dengan hidupnya, para pelayan altar belajar mencintai Kristus, bersikap berani, dan menjalankan tugas dengan penuh hormat.",
+  },
+  {
+    number: "02", name: "Putri Sakristi", patron: "St. Jeanne d’Arc", focus: "9%",
+    intro: "Putri Sakristi menyiapkan perlengkapan Ekaristi, menjaga kerapian sakristi, dan mendukung tata perayaan agar umat dapat beribadat dengan baik dan khusyuk. Semangat St. Jeanne d’Arc mengajak mereka melayani Tuhan dengan hati murni, keberanian, keteguhan, dan kesediaan berkata ‘ya’ pada tugas yang dipercayakan.",
+  },
+  {
+    number: "03", name: "Caeremoniarius", patron: "St. Yohanes Berchmans", focus: "22%",
+    intro: "Caeremoniarius menjaga ritme perayaan, mengoordinasikan para petugas, dan memastikan setiap tata gerak berlangsung benar, indah, serta tepat waktu. Teladan St. Yohanes Berchmans—melakukan hal-hal biasa dengan kesungguhan luar biasa—menjiwai pelayanan yang teliti, tanggap, rendah hati, dan setia dalam setiap detail.",
+  },
+  {
+    number: "04", name: "Lektor", patron: "St. Hieronimus", focus: "36%",
+    intro: "Lektor mewartakan bacaan Kitab Suci secara jelas, berwibawa, dan penuh penghayatan agar Sabda Allah sungguh menyentuh hati umat. Bersama St. Hieronimus, yang menempatkan Kitab Suci di pusat hidupnya, para lektor dipanggil untuk tekun membaca, merenungkan, dan lebih dahulu menghidupi Sabda yang mereka wartakan.",
+  },
+  {
+    number: "05", name: "Pemazmur", patron: "St. Cicilia", focus: "49%",
+    intro: "Pemazmur melantunkan Mazmur Tanggapan sebagai bagian tak terpisahkan dari Sabda Allah dan mengajak umat menjawab-Nya melalui nyanyian. St. Cicilia menginspirasi pelayanan yang bernyanyi kepada Tuhan dari dalam hati, sehingga keindahan suara tidak menjadi pertunjukan, melainkan doa yang mengangkat dan mempersatukan umat.",
+  },
+  {
+    number: "06", name: "Pasdior", patron: "St. Romanus", focus: "61%",
+    intro: "Pasdior—paduan suara, dirigen, dan organis—menolong umat berpartisipasi dalam liturgi melalui musik gerejawi yang indah, hidup, dan sesuai kaidah Gereja. Dari St. Romanus Sang Melodis, mereka belajar mengolah iman menjadi nyanyian, keindahan, dan pewartaan yang membawa hati berjumpa dengan Kristus.",
+  },
+  {
+    number: "07", name: "Kolatan", patron: "St. Zita", focus: "72%",
+    intro: "Kolatan melayani sebagai wajah pertama keramahtamahan: menyambut dan menata umat, menjaga ketertiban, serta mengelola kolekte dengan teliti. Kesederhanaan St. Zita mengajarkan bahwa pekerjaan sehari-hari dapat menjadi jalan kekudusan ketika dilakukan dengan rajin, rendah hati, penuh kasih, dan peka terhadap mereka yang membutuhkan.",
+  },
+  {
+    number: "08", name: "Prodiakon", patron: "St. Petrus dan St. Paulus", focus: "90%", size: "520% auto",
+    intro: "Prodiakon menjadi perpanjangan tangan imam dalam pelayanan Komuni, Ibadat Sabda, pelayanan kedukaan, serta pendampingan umat sakit dan lanjut usia. St. Petrus dan St. Paulus menumbuhkan semangat kesatuan, keberanian apostolik, dan keterbukaan menjangkau semua orang agar pelayanan sakramental hadir secara merata dan memerdekakan.",
+  },
+  {
+    number: "09", name: "Dekorasi Altar", patron: "-", focus: "100%",
+    intro: "Dekorasi Altar menata ruang perayaan dengan peka terhadap masa liturgi, simbol, warna, dan kelayakan tempat ibadat, sehingga keindahan membantu umat memasuki misteri iman.",
+  },
 ];
 
 type Person = { name: string; region: string };
@@ -139,13 +167,16 @@ const divisions: {
   number: string;
   title: string;
   shortTitle: string;
-  deputy: Person;
+  deputies: Person[];
   groups: Group[];
   accent: string;
 }[] = [
   {
     number: "01", title: "Pendampingan Parsius, Santaris, dan Caeremoniarius", shortTitle: "Parsius, Santaris & Caeremoniarius", accent: "violet",
-    deputy: { name: "Dionisius Matthew Reinhart Budiman", region: "Keagungan" },
+    deputies: [
+      { name: "Dionisius Matthew Reinhart Budiman", region: "Keagungan" },
+      { name: "Rafael Rolland Eiffel Milkha Toha", region: "Pang. Jayakarta" },
+    ],
     groups: [
       { title: "Ketua Subseksi Putra Altar St. Tarsisius", people: [{ name: "Benedictus Yongen Given Rombe", region: "Dwiwarna" }] },
       { title: "Ketua Subseksi Putri Sakristi St. Jeanne d’Arc", people: [{ name: "Felice Perpetua Xelica Electra Verrenna", region: "Kartini" }] },
@@ -154,7 +185,7 @@ const divisions: {
   },
   {
     number: "02", title: "Pendampingan Lektor, Pemazmur, dan Pasdior", shortTitle: "Lektor, Pemazmur & Pasdior", accent: "blue",
-    deputy: { name: "Maria Stephanie Indri Putri", region: "Taman Sari" },
+    deputies: [{ name: "Maria Stephanie Indri Putri", region: "Taman Sari" }],
     groups: [
       { title: "Ketua Subseksi Lektor St. Hieronimus", people: [{ name: "Johanes Denny Indrawan", region: "Kebon Jeruk" }] },
       { title: "Ketua Subseksi Pemazmur St. Cicilia", people: [{ name: "Alfonsus Yosef Gabriel Syamsudin", region: "Kartini" }] },
@@ -163,7 +194,7 @@ const divisions: {
   },
   {
     number: "03", title: "Pendampingan Prodiakon, Kolatan, dan Dekorasi Altar", shortTitle: "Prodiakon, Kolatan & Dekorasi Altar", accent: "coral",
-    deputy: { name: "Caecilia Tjen Lydia", region: "Mangga Besar 1" },
+    deputies: [{ name: "Caecilia Tjen Lydia", region: "Mangga Besar 1" }],
     groups: [
       { title: "Ketua Subseksi Kolatan St. Zita", people: [{ name: "Clarissa Stephanie Tediana", region: "Taman Sari" }] },
       { title: "Ketua Subseksi Prodiakon St. Petrus dan Paulus", people: [{ name: "Vinsensius Dominikus Budiono", region: "Kartini" }] },
@@ -172,7 +203,7 @@ const divisions: {
   },
   {
     number: "04", title: "Tata Laksana, Perayaan, dan Ibadat", shortTitle: "Tata Laksana, Perayaan & Ibadat", accent: "violet",
-    deputy: { name: "Anthony Edward Tanjaya Jason Winata", region: "Kartini" },
+    deputies: [{ name: "Anthony Edward Tanjaya Jason Winata", region: "Kartini" }],
     groups: [
       { title: "Staff Musica Liturgia", people: [{ name: "Alfonsus Yosef Gabriel Syamsudin", region: "Kartini" }] },
       { title: "Staff Tata Gerak Liturgi", people: [
@@ -187,7 +218,7 @@ const divisions: {
   },
   {
     number: "05", title: "Administrasi dan Komunikasi", shortTitle: "Administrasi & Komunikasi", accent: "blue",
-    deputy: { name: "Florentina Aurelia Regina Sabina", region: "Keagungan" },
+    deputies: [{ name: "Florentina Aurelia Regina Sabina", region: "Keagungan" }],
     groups: [
       { title: "Staff Desain Visual", people: [
         { name: "Timotius Vincent Halim", region: "Kartini" },
@@ -207,7 +238,7 @@ const divisions: {
   },
   {
     number: "06", title: "Barang Liturgi dan Benda Devosi", shortTitle: "Barang Liturgi & Benda Devosi", accent: "coral",
-    deputy: { name: "Dorothea Dermawaty Purba", region: "Tangki" },
+    deputies: [{ name: "Dorothea Dermawaty Purba", region: "Tangki" }],
     groups: [
       { title: "Staff Inventaris", people: [
         { name: "Giovana Susanna", region: "Dwiwarna" },
@@ -541,9 +572,9 @@ export default function Home() {
               Liturgi yang <span className="hero-highlight">hidup.</span> Pelayanan yang sepenuh hati.
             </h1>
             <p className="mt-7 max-w-xl text-base leading-8 text-[#e1e5ff] sm:text-lg">
-              Ruang bersama untuk mengenal pelayanan Seksi Liturgi Paroki Mangga Besar,
-              menemukan sumber daya, dan mengikuti kalender liturgi. Bersama, kita merawat
-              perayaan iman yang khidmat dan bermakna.
+              Seksi Liturgi mengoordinasikan pelayanan agar setiap perayaan iman di Paroki
+              Mangga Besar berlangsung baik, benar, indah, bermakna, hidup, dan memerdekakan,
+              sehingga umat semakin menghayati misteri keselamatan dalam kebersamaan yang sinodal.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a href="#layanan" className="button button-primary justify-center">
@@ -649,8 +680,14 @@ export default function Home() {
             </div>
             <div className="division-deputy">
               <p className="card-eyebrow">WAKIL {Number(activeDivision.number)}</p>
-              <p className="person-name">{activeDivision.deputy.name}</p>
-              <PersonDetails person={activeDivision.deputy} />
+              <div className="division-deputy-list">
+                {activeDivision.deputies.map((deputy) => (
+                  <div className="division-deputy-person" key={deputy.name}>
+                    <p className="person-name">{deputy.name}</p>
+                    <PersonDetails person={deputy} />
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="division-groups">
               {activeDivision.groups.map((group) => (
@@ -749,9 +786,7 @@ export default function Home() {
               <p className="subsection-dialog-patron">Pelindung · {activeSubsection.patron}</p>
               <h2 id="subsection-dialog-title">Subseksi {activeSubsection.name}</h2>
               <p className="subsection-dialog-intro">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pelayanan ini bertumbuh
-                dalam semangat kebersamaan, ketekunan, dan kesiapsediaan untuk mendukung setiap
-                perayaan liturgi agar berlangsung dengan khidmat, tertib, dan penuh sukacita.
+                {activeSubsection.intro}
               </p>
             </div>
           </div>

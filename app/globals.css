@@ -373,7 +373,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e9c778; outline-offs
 .division-number { flex: none; color: var(--accent-color); font-size: .7rem; font-weight: 850; letter-spacing: .13em; }
 .division-deputy { border-bottom: 1px solid #e9e3e1; background: var(--accent-bg); padding: 1.25rem 1.65rem; }
 .division-deputy .card-eyebrow { color: var(--accent-color); }
-.division-deputy .person-name { margin-top: .4rem; }
+.division-deputy-list { display: grid; gap: .9rem; margin-top: .55rem; }
+.division-deputy-person + .division-deputy-person { border-top: 1px solid color-mix(in srgb, var(--accent-color) 18%, transparent); padding-top: .9rem; }
 .person-details { display: flex; flex-wrap: wrap; gap: .15rem .45rem; margin-top: .3rem; color: #646a83; font-size: .78rem; line-height: 1.6; }
 .division-groups { padding: .25rem 1.65rem .6rem; }
 .division-group { border-bottom: 1px solid #eeeae7; padding: 1.1rem 0; }
